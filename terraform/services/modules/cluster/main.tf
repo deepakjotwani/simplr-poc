@@ -1,44 +1,91 @@
-# Generate unique cluster profix
-resource "random_id" "cluster" {
-  byte_length = 4
+resource "aws_cloudwatch_log_group" "this" {
+  count             = length(var.cluster_enabled_log_types) > 0 ? 1 : 0
+  name              = "/aws/eks/${var.cluster_name}/cluster"
+  retention_in_days = var.cluster_log_retention_in_days
+  kms_key_id        = var.cluster_log_kms_key_id
+  tags              = var.tags
 }
 
-# GKE cluster
-resource "google_container_cluster" "primary" {
-  name                     = "${var.cluster_name_prefix}-${terraform.workspace}-${random_id.cluster.hex}"
-  project                  = var.admin_project
-  location                 = var.region
-  initial_node_count       = var.initial_node_count
+resource "aws_eks_cluster" "aws_eks_cluster" {
+  name                      = var.cluster_name
+  enabled_cluster_log_types = var.cluster_enabled_log_types
+  role_arn                  = local.cluster_iam_role_arn
+  version                   = var.cluster_version
+  tags                      = var.tags
 
-  # GKE cluster version
-  node_version             = var.node_version
-  min_master_version       = var.node_version
-
-  # Do not use default node pool
-  remove_default_node_pool = true
-
-  ip_allocation_policy {
+  vpc_config {
+    security_group_ids      = [local.cluster_security_group_id]
+    subnet_ids              = var.subnets
+    endpoint_private_access = var.cluster_endpoint_private_access
+    endpoint_public_access  = var.cluster_endpoint_public_access
   }
 
-  # Logging and Monitoring
-  logging_service = "logging.googleapis.com/kubernetes"
-  monitoring_service = "monitoring.googleapis.com/kubernetes"
+  depends_on = [
+    aws_iam_role_policy_attachment.cluster_AmazonEKSClusterPolicy,
+    aws_iam_role_policy_attachment.cluster_AmazonEKSServicePolicy,
+    aws_cloudwatch_log_group.this
+  ]
+}
 
-  # Authentication
-  master_auth {
-    client_certificate_config {
-      issue_client_certificate = false
-    }
-  }
+resource "aws_security_group" "cluster" {
+  count       = var.cluster_create_security_group ? 1 : 0
+  name_prefix = var.cluster_name
+  description = "EKS cluster security group."
+  vpc_id      = var.vpc_id
+  tags = merge(
+    var.tags,
+    {
+      "Name" = "${var.cluster_name}-eks_cluster_sg"
+    },
+  )
+}
 
-  # Addons
-  addons_config {
-    http_load_balancing {
-      disabled = false
-    }
+resource "aws_security_group_rule" "cluster_egress_internet" {
+  count             = var.cluster_create_security_group ? 1 : 0
+  description       = "Allow cluster egress access to the Internet."
+  protocol          = "-1"
+  security_group_id = local.cluster_security_group_id
+  cidr_blocks       = ["0.0.0.0/0"]
+  from_port         = 0
+  to_port           = 0
+  type              = "egress"
+}
 
-    horizontal_pod_autoscaling {
-      disabled = false
+resource "aws_security_group_rule" "cluster_https_worker_ingress" {
+  count                    = var.cluster_create_security_group ? 1 : 0
+  description              = "Allow pods to communicate with the EKS cluster API."
+  protocol                 = "tcp"
+  security_group_id        = local.cluster_security_group_id
+  source_security_group_id = local.worker_security_group_id
+  from_port                = 443
+  to_port                  = 443
+  type                     = "ingress"
+}
+resource "aws_iam_role" "example" {
+  name = "eks-cluster-example"
+
+  assume_role_policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "eks.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
     }
-  }
+  ]
+}
+POLICY
+}
+
+resource "aws_iam_role_policy_attachment" "example-AmazonEKSClusterPolicy" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+  role       = "${aws_iam_role.example.name}"
+}
+
+resource "aws_iam_role_policy_attachment" "example-AmazonEKSServicePolicy" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
+  role       = "${aws_iam_role.example.name}"
 }
