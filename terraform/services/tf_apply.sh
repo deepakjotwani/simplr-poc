@@ -1,3 +1,3 @@
 #! /bin/bash
 
-terraform apply -auto-approve -var-file=../../common/services.tfvars
+terraform apply -auto-approve

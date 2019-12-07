@@ -1,23 +1,10 @@
-resource "aws_cloudwatch_log_group" "this" {
-  count             = length(var.cluster_enabled_log_types) > 0 ? 1 : 0
-  name              = "/aws/eks/${var.cluster_name}/cluster"
-  retention_in_days = var.cluster_log_retention_in_days
-  kms_key_id        = var.cluster_log_kms_key_id
-  tags              = var.tags
-}
-
-resource "aws_eks_cluster" "aws_eks_cluster" {
+resource "aws_eks_cluster" "eks_cluster" {
   name                      = var.cluster_name
-  enabled_cluster_log_types = var.cluster_enabled_log_types
-  role_arn                  = local.cluster_iam_role_arn
+  role_arn                  = "${aws_iam_role.eks-cluster-iamrole.arn}"
   version                   = var.cluster_version
-  tags                      = var.tags
 
   vpc_config {
-    security_group_ids      = [local.cluster_security_group_id]
     subnet_ids              = var.subnets
-    endpoint_private_access = var.cluster_endpoint_private_access
-    endpoint_public_access  = var.cluster_endpoint_public_access
   }
 
   depends_on = [
@@ -26,43 +13,34 @@ resource "aws_eks_cluster" "aws_eks_cluster" {
     aws_cloudwatch_log_group.this
   ]
 }
-
-resource "aws_security_group" "cluster" {
-  count       = var.cluster_create_security_group ? 1 : 0
-  name_prefix = var.cluster_name
-  description = "EKS cluster security group."
-  vpc_id      = var.vpc_id
-  tags = merge(
-    var.tags,
-    {
-      "Name" = "${var.cluster_name}-eks_cluster_sg"
-    },
-  )
+resource "aws_iam_openid_connect_provider" "example" {
+  client_id_list  = ["sts.amazonaws.com"]
+  thumbprint_list = []
+  url             = "${aws_eks_cluster.example.identity.0.oidc.0.issuer}"
 }
 
-resource "aws_security_group_rule" "cluster_egress_internet" {
-  count             = var.cluster_create_security_group ? 1 : 0
-  description       = "Allow cluster egress access to the Internet."
-  protocol          = "-1"
-  security_group_id = local.cluster_security_group_id
-  cidr_blocks       = ["0.0.0.0/0"]
-  from_port         = 0
-  to_port           = 0
-  type              = "egress"
+data "aws_caller_identity" "current" {}
+
+data "aws_iam_policy_document" "example_assume_role_policy" {
+  statement {
+    actions = ["sts:AssumeRoleWithWebIdentity"]
+    effect  = "Allow"
+
+    condition {
+      test     = "StringEquals"
+      variable = "${replace(aws_iam_openid_connect_provider.example.url, "https://", "")}:sub"
+      values   = ["system:serviceaccount:kube-system:aws-node"]
+    }
+
+    principals {
+      identifiers = ["${aws_iam_openid_connect_provider.example.arn}"]
+      type        = "Federated"
+    }
+  }
 }
 
-resource "aws_security_group_rule" "cluster_https_worker_ingress" {
-  count                    = var.cluster_create_security_group ? 1 : 0
-  description              = "Allow pods to communicate with the EKS cluster API."
-  protocol                 = "tcp"
-  security_group_id        = local.cluster_security_group_id
-  source_security_group_id = local.worker_security_group_id
-  from_port                = 443
-  to_port                  = 443
-  type                     = "ingress"
-}
-resource "aws_iam_role" "example" {
-  name = "eks-cluster-example"
+resource "aws_iam_role" "eks-cluster-iamrole" {
+  name = "eks-cluster-iamrole"
 
   assume_role_policy = <<POLICY
 {
@@ -82,10 +60,10 @@ POLICY
 
 resource "aws_iam_role_policy_attachment" "example-AmazonEKSClusterPolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role       = "${aws_iam_role.example.name}"
+  role       = "${aws_iam_role.eks-cluster-iamrole.name}"
 }
 
 resource "aws_iam_role_policy_attachment" "example-AmazonEKSServicePolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
-  role       = "${aws_iam_role.example.name}"
+  role       = "${aws_iam_role.eks-cluster-iamrole.name}"
 }
