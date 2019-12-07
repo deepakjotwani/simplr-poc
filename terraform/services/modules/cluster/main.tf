@@ -10,7 +10,6 @@ resource "aws_eks_cluster" "eks_cluster" {
   depends_on = [
     aws_iam_role_policy_attachment.cluster_AmazonEKSClusterPolicy,
     aws_iam_role_policy_attachment.cluster_AmazonEKSServicePolicy,
-    aws_cloudwatch_log_group.this
   ]
 }
 resource "aws_iam_openid_connect_provider" "example" {
