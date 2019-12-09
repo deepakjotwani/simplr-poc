@@ -5,7 +5,7 @@ resource "kubernetes_service" "frontendsvc" {
 
   spec {
     selector = {
-      app = "${kubernetes_deployment.fWrontend.metadata.0.labels.app}"
+      app = "${kubernetes_deployment.frontend.metadata.0.labels.app}"
     }
 
     port {
