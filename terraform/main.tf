@@ -25,7 +25,7 @@ provider "kubernetes" {
   load_config_file       = false
 }
 
-module "python" {
-  source  = "./modules/python"
+# module "python" {
+#   source  = "./modules/python"
 
-}
+# }
