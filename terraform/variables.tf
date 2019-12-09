@@ -13,23 +13,23 @@
 #   description = "Number of days to retain log events. Default retention - 90 days."
 #   type        = number
 # }
-#
-# variable "cluster_name" {
-#   description = "Name of the EKS cluster. Also used as a prefix in names of related resources."
-#   type        = string
-# }
-#
+
+variable "cluster_name" {
+  description = "Name of the EKS cluster. Also used as a prefix in names of related resources."
+  type        = string
+}
+
 # variable "cluster_security_group_id" {
 #   description = "If provided, the EKS cluster will be attached to this security group. If not given, a security group will be created with necessary ingress/egress to work with the workers"
 #   type        = string
 #   default     = ""
 # }
 #
-# variable "cluster_version" {
-#   description = "Kubernetes version to use for the EKS cluster."
-#   type        = string
-#   default     = "1.14"
-# }
+variable "cluster_version" {
+  description = "Kubernetes version to use for the EKS cluster."
+  type        = string
+  default     = "1.14"
+}
 #
 # variable "config_output_path" {
 #   description = "Where to save the Kubectl config file (if `write_kubeconfig = true`). Assumed to be a directory if the value ends with a forward slash `/`."
@@ -80,10 +80,10 @@
 #   default = []
 # }
 #
-# variable "subnets" {
-#   description = "A list of subnets to place the EKS cluster and workers within."
-#   type        = list(string)
-# }
+variable "subnets" {
+  description = "A list of subnets to place the EKS cluster and workers within."
+  type        = list(string)
+}
 #
 # variable "tags" {
 #   description = "A map of tags to add to all resources."
@@ -91,16 +91,16 @@
 #   default     = {}
 # }
 #
-# variable "vpc_id" {
-#   description = "VPC where the cluster and workers will be deployed."
-#   type        = string
-# }
+variable "vpc_id" {
+  description = "VPC where the cluster and workers will be deployed."
+  type        = string
+}
 #
-# variable "worker_groups" {
-#   description = "A list of maps defining worker group configurations to be defined using AWS Launch Configurations. See workers_group_defaults for valid keys."
-#   type        = any
-#   default     = []
-# }
+variable "worker_groups" {
+  description = "A list of maps defining worker group configurations to be defined using AWS Launch Configurations. See workers_group_defaults for valid keys."
+  type        = any
+  default     = []
+}
 #
 # variable "workers_group_defaults" {
 #   description = "Override default values for target groups. See workers_group_defaults_defaults in local.tf for valid keys."
