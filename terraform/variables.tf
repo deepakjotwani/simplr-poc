@@ -17,6 +17,7 @@
 variable "cluster_name" {
   description = "Name of the EKS cluster. Also used as a prefix in names of related resources."
   type        = string
+  default = "simplr-demo-cluster"
 }
 
 # variable "cluster_security_group_id" {
@@ -83,6 +84,7 @@ variable "cluster_version" {
 variable "subnets" {
   description = "A list of subnets to place the EKS cluster and workers within."
   type        = list(string)
+  default = ["subnet-06e2e100ebfa9a574", "subnet-0bbeda2c05f614427", "subnet-0d291755f72dd5b83"]
 }
 #
 # variable "tags" {
@@ -94,13 +96,14 @@ variable "subnets" {
 variable "vpc_id" {
   description = "VPC where the cluster and workers will be deployed."
   type        = string
+  default = "vpc-08c54b71caa4efdc9"
 }
 #
-variable "worker_groups" {
-  description = "A list of maps defining worker group configurations to be defined using AWS Launch Configurations. See workers_group_defaults for valid keys."
-  type        = any
-  default     = []
-}
+# variable "worker_groups" {
+#   description = "A list of maps defining worker group configurations to be defined using AWS Launch Configurations. See workers_group_defaults for valid keys."
+#   type        = any
+#   default     = []
+# }
 #
 # variable "workers_group_defaults" {
 #   description = "Override default values for target groups. See workers_group_defaults_defaults in local.tf for valid keys."
