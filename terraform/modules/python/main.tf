@@ -1,3 +1,7 @@
+provider "kubernetes" {
+  load_config_file       = true
+}
+
 resource "kubernetes_service" "frontendsvc" {
   metadata {
     name = "frontendsvc"
