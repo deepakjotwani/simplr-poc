@@ -28,3 +28,7 @@ variable "vpc_id" {
   type        = string
   default = "vpc-08c54b71caa4efdc9"
 }
+variable "dependencies" {
+  type    = list
+  default = []
+}

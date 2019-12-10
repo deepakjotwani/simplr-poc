@@ -22,3 +22,6 @@ output "cluster_version" {
   description = "The Kubernetes server version for the EKS cluster."
   value       = aws_eks_cluster.eks_cluster.version
 }
+output "depended_on" {
+  value = "${null_resource.dependency_setter.id}"
+}

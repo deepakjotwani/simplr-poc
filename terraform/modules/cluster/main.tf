@@ -71,3 +71,7 @@ resource "aws_iam_role_policy_attachment" "cluster_AmazonEKSServicePolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
   role       = "${aws_iam_role.eks-cluster-iamrole.name}"
 }
+
+resource "null_resource" "dependency_setter" {
+  depends_on = [ aws_eks_cluster.eks_cluster ]
+}

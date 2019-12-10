@@ -49,6 +49,19 @@ resource "aws_iam_role_policy_attachment" "simplr-AmazonEC2ContainerRegistryRead
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
   role       = aws_iam_role.eks-node-group-iamrole.name
 }
+resource "null_resource" "dependency_getter" {
+  provisioner "local-exec" {
+    command = "echo ${length(var.dependencies)}"
+  }
+}
 resource "null_resource" "dependency_setter" {
   depends_on = [ aws_eks_node_group.eks_node_group ]
+}
+resource "null_resource" "delay" {
+  provisioner "local-exec" {
+    command = "sleep 60"
+  }
+  triggers = {
+    "before" = null_resource.dependency_getter.id
+  }
 }
