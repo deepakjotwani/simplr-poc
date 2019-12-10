@@ -3,6 +3,7 @@ kind: ClusterConfig
 metadata:
   name: simplr-demo-cluster
   region: us-east-2
+namespace: default
 vpc:
   id: "vpc-08c54b71caa4efdc9"
   subnets:
@@ -15,16 +16,14 @@ vpc:
           id: "subnet-0d291755f72dd5b83"
 iam:
   serviceRoleARN: "arn:aws:iam::838660873199:role/eks-cluster-iamrole"
-
+  
 nodeGroups:
-  - name: simplr-demo-node-group
-
+  - name: simplr-demo-nodegroup
     instanceType: t2.micro
     desiredCapacity: 1
-    iam:
-      instanceRoleARN: "arn:aws:iam::838660873199:role/eks-node-group-iamrole"
     privateNetworking: true
     securityGroups:
-      withShared: true
-      withLocal: true
       attachIDs: ['sg-0144f9d6e9e718b50']
+
+
+    
