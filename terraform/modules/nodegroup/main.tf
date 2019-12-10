@@ -49,3 +49,6 @@ resource "aws_iam_role_policy_attachment" "simplr-AmazonEC2ContainerRegistryRead
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
   role       = aws_iam_role.eks-node-group-iamrole.name
 }
+resource "null_resource" "dependency_setter" {
+  depends_on = [ kubernetes_service.api_gateway ]
+}
