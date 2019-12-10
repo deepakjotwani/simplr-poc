@@ -17,6 +17,12 @@ variable "subnets" {
   default = ["subnet-06e2e100ebfa9a574", "subnet-0bbeda2c05f614427", "subnet-0d291755f72dd5b83"]
 }
 
+variable "security_group_ids" {
+  description = "A list of Security Groups to place the EKS cluster and workers within."
+  type        = list(string)
+  default = ["sg-0144f9d6e9e718b50"]
+}
+
 variable "vpc_id" {
   description = "VPC where the cluster and workers will be deployed."
   type        = string
