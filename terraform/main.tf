@@ -16,6 +16,7 @@ module "cluster" {
 }
 module "nodegroup" {
   source  = "./modules/nodegroup"
+  cluster_name    = var.cluster_name
    dependencies              = [
     module.cluster.depended_on
   ]

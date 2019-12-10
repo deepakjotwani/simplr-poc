@@ -57,11 +57,3 @@ resource "null_resource" "dependency_getter" {
 resource "null_resource" "dependency_setter" {
   depends_on = [ aws_eks_node_group.eks_node_group ]
 }
-resource "null_resource" "delay" {
-  provisioner "local-exec" {
-    command = "sleep 60"
-  }
-  triggers = {
-    "before" = null_resource.dependency_getter.id
-  }
-}
