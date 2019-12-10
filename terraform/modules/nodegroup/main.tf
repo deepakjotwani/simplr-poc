@@ -50,5 +50,5 @@ resource "aws_iam_role_policy_attachment" "simplr-AmazonEC2ContainerRegistryRead
   role       = aws_iam_role.eks-node-group-iamrole.name
 }
 resource "null_resource" "dependency_setter" {
-  depends_on = [ kubernetes_service.api_gateway ]
+  depends_on = [ aws_eks_node_group.eks_node_group ]
 }
