@@ -16,6 +16,9 @@ module "cluster" {
 }
 module "nodegroup" {
   source  = "./modules/nodegroup"
+   dependencies              = [
+    module.cluster.depended_on
+  ]
 
 }
 provider "kubernetes" {
@@ -27,5 +30,8 @@ provider "kubernetes" {
 
 module "python" {
   source  = "./modules/python"
+   dependencies              = [
+    module.nodegroup.depended_on
+  ]
 
 }
