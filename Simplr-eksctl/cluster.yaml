@@ -16,11 +16,11 @@ vpc:
           id: "subnet-0d291755f72dd5b83"
 iam:
   serviceRoleARN: "arn:aws:iam::838660873199:role/eks-cluster-iamrole"
-  
+
 nodeGroups:
   - name: simplr-demo-nodegroup
     instanceType: t2.micro
-    desiredCapacity: 1
+    desiredCapacity: 3
     privateNetworking: true
     securityGroups:
       attachIDs: ['sg-0144f9d6e9e718b50']
