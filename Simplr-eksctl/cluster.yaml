@@ -3,7 +3,6 @@ kind: ClusterConfig
 metadata:
   name: simplr-demo-cluster
   region: us-east-2
-namespace: default
 vpc:
   id: "vpc-08c54b71caa4efdc9"
   subnets:
