@@ -19,7 +19,7 @@ iam:
 nodeGroups:
   - name: simplr-demo-nodegroup
     instanceType: t2.micro
-    desiredCapacity: 2
+    desiredCapacity: 3
     privateNetworking: false
     securityGroups:
       attachIDs: ['sg-0144f9d6e9e718b50']
