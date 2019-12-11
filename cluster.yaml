@@ -23,8 +23,6 @@ nodeGroups:
     privateNetworking: false
     securityGroups:
       attachIDs: ['sg-0144f9d6e9e718b50']
-    ssh:
-      publicKeyName: 'Simplr.pem'
       
 
 
