@@ -19,6 +19,9 @@ spec:
       containers:
         - name: frontend
           image: deepakjotwani/simplr:latest
+          restartPolicy: Always
+          nodeSelector:
+            name: simplr
           ports:
             - name: frontend
               containerPort: 5000
