@@ -7,11 +7,10 @@ metadata:
   labels:
     app: alb-ingress-controller
   name: alb-ingress-controller
-  # # Namespace the ALB Ingress Controller should run in. Does not impact which
-  # # namespaces it's able to resolve ingress resource for. For limiting ingress
-  # # namespace scope, see --watch-namespace.
-  # namespace: kube-system
-spec:
+  # Namespace the ALB Ingress Controller should run in. Does not impact which
+  # namespaces it's able to resolve ingress resource for. For limiting ingress
+  # namespace scope, see --watch-namespace.
+  namespace: default
   replicas: 1
   selector:
     matchLabels:
@@ -41,11 +40,11 @@ spec:
             # Name of your cluster. Used when naming resources created
             # by the ALB Ingress Controller, providing distinction between
             # clusters.
-            - --cluster-name=devCluster
+            - --cluster-name=simplr-demo-cluster
 
             # AWS VPC ID this ingress controller will use to create AWS resources.
             # If unspecified, it will be discovered from ec2metadata.
-            # - --aws-vpc-id=vpc-xxxxxx
+             - --aws-vpc-id=vpc-08c54b71caa4efdc9
 
             # AWS region this ingress controller will operate in. 
             # If unspecified, it will be discovered from ec2metadata.
