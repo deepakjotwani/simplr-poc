@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: "backend-ingress"
+  name: "frontend-ingress"
 spec:
   rules:
     - http:
