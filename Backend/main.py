@@ -7,7 +7,7 @@ app = Flask(__name__)
 cors= CORS(app)
 @app.route("/")
 def hello():
-        return "Success"
+        return "Backend Working"
 
 
 if __name__ == '__main__':
