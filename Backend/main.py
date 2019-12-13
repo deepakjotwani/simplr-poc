@@ -5,7 +5,7 @@ import requests
 from requests.exceptions import HTTPError
 app = Flask(__name__)
 cors= CORS(app)
-@app.route("/")
+@app.route("/backend")
 def hello():
         return "Backend Working"
 
