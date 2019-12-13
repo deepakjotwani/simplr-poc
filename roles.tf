@@ -48,6 +48,11 @@ resource "aws_iam_role" "eks-node-group-iamrole" {
   })
 }
 
+resource "aws_iam_instance_profile" "test_profile" {
+  name = "eks-node-group-instance-profile"
+  role = "${aws_iam_role.eks-node-group-iamrole.name}"
+}
+
 resource "aws_iam_policy" "ALBIngressControllerIAMPolicy" {
   name        = "ALBIngressControllerIAMPolicy"
   description = "ALBIngressControllerIAMPolicy"
@@ -192,3 +197,4 @@ resource "aws_iam_role_policy_attachment" "simplr-ALBIngressControllerIAMPolicy"
   policy_arn = "${aws_iam_policy.ALBIngressControllerIAMPolicy.arn}"
   role       = aws_iam_role.eks-node-group-iamrole.name
 }
+
