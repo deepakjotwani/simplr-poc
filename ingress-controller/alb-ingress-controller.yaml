@@ -5,6 +5,7 @@ metadata:
     app.kubernetes.io/name: alb-ingress-controller
   name: alb-ingress-controller
   namespace: kube-system
+
 spec:
   selector:
     matchLabels:
@@ -16,12 +17,10 @@ spec:
     spec:
       containers:
         - name: alb-ingress-controller
-          args:
+          args:            
             - --ingress-class=alb         
             - --cluster-name=simplr-demo-cluster
             - --aws-vpc-id=vpc-08c54b71caa4efdc9
-            - --aws-region=us-east-2
-
-         
+            - --aws-region=us-east-2          
           image: docker.io/amazon/aws-alb-ingress-controller:v1.1.4
       serviceAccountName: alb-ingress-controller
