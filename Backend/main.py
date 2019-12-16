@@ -8,6 +8,9 @@ cors= CORS(app)
 @app.route("/backend")
 def hello():
         return "Backend Working"
+@app.route("/")
+def test():
+        return "Backend Working"
 
 
 if __name__ == '__main__':
