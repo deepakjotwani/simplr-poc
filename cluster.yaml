@@ -23,6 +23,9 @@ nodeGroups:
     privateNetworking: false
     securityGroups:
       attachIDs: ['sg-0144f9d6e9e718b50']
+    iam:
+      instanceProfileARN: "arn:aws:iam::838660873199:instance-profile/eks-node-group-instance-profile"
+      instanceRoleARN: "arn:aws:iam::838660873199:role/eks-node-group-iamrole"
       
 
 

@@ -21,3 +21,5 @@ spec:
               serviceName: "backend-service"
               servicePort: 80
                                  
+                              
+#Add tags in subnet as mentioned in (https://docs.aws.amazon.com/eks/latest/userguide/alb-ingress.html)

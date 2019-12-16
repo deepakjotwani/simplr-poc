@@ -37,8 +37,3 @@ ls
 eksctl create cluster -f cluster.yaml
 
 
-# kubectl apply -f ./Backend
-# kubectl apply -f ./Frontend
-# kubectl apply -f ./ingress-controller
-
-
