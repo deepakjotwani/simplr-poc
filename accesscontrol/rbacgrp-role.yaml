@@ -1,8 +1,22 @@
-apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  namespace: "default"
-  name: developer-default
+  namespace: default
+  name: deepakdefault
+rules:
+- apiGroups: [""] # "" indicates the core API group
+  resources: ["pods"]
+  verbs: ["list","get","watch"]
+- apiGroups: ["extensions","apps"]
+  resources: ["deployments"]
+  verbs: ["get", "list", "watch"]
+---
+
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: kube-system
+  name: deepakkubesystem
 rules:
 - apiGroups: [""] # "" indicates the core API group
   resources: ["pods"]
@@ -11,17 +25,4 @@ rules:
   resources: ["deployments"]
   verbs: ["get", "list", "watch"]
 
-
-apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
-metadata:
-  namespace: "kube-system"
-  name: testers-kubesystem
-rules:
-- apiGroups: [""] # "" indicates the core API group
-  resources: ["pods"]
-  verbs: ["list","get","watch"]
-- apiGroups: ["extensions","apps"]
-  resources: ["deployments"]
-  verbs: ["get", "list", "watch"]
 

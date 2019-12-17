@@ -1,27 +1,28 @@
-apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: developer-default
+  name: deepakdefault
   namespace: default
 subjects:
-- kind: Group
-  name: developer-default
+- kind: User
+  name: deepakdefault
   apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: Role
-  name: developer-default
+  name: deepakdefault
   apiGroup: rbac.authorization.k8s.io
+---
 
-apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: testers-kubesystem
-  namespace: kube-system
+  name: deepakkubesystem
+  namespace: default
 subjects:
-- kind: Group
-  name: testers-kubesystem
+- kind: User
+  name: deepakkubesystem
   apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: Role
-  name: testers-kubesystem
+  name: deepakkubesystem
   apiGroup: rbac.authorization.k8s.io
