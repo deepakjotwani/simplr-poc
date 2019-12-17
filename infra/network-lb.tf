@@ -19,7 +19,7 @@ resource "aws_lb_target_group" "simplr-nlb-tg" {
     interval            = 30
     path                = "/"
     protocol            = "TCP"
-    port                = "traffic port"
+    port                = "traffic-port"
     timeout             = 10
     healthy_threshold   = 3
     unhealthy_threshold = 3
