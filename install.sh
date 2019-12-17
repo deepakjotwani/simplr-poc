@@ -1,3 +1,17 @@
+echo "installing terraform"
+
+sudo apt-get install unzip
+
+wget https://releases.hashicorp.com/terraform/0.12.18/terraform_0.12.18_linux_amd64.zip
+
+unzip terraform_0.12.18_linux_amd64.zip
+
+sudo mv terraform /usr/local/bin/
+
+terraform --version
+
+echo "terraform succesfully installed"
+
 echo "installing aws-iam-authenticator"
 
 curl -o aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/1.14.6/2019-08-22/bin/linux/amd64/aws-iam-authenticator
@@ -32,11 +46,20 @@ eksctl version
 
 echo " eksctl succesfully installed"
 
-ls
+
+cd infra
+
+terraform init 
+
+terraform apply --auto-approve
 
 eksctl create cluster -f cluster.yaml
 
 
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/v1.1.4/docs/examples/rbac-role.yaml
+kubectl apply -f ./ingress-controller/alb-ingress-controller.yaml
 
+kubectl apply -f./Frontend
+kubectl apply -f./Backend
+kubectl apply -f ./ingress-controller/ingress.yaml
 
