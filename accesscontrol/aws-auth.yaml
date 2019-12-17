@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aws-auth
+  namespace: default
+data:
+  mapGroup  : |
+    - grouparn: arn:aws:iam::838660873199:group/developer-default
+      username: developer-default
+    - grouparn: arn:aws:iam::838660873199:group/testers-kubesystem
+      username: testers-kubesystem
