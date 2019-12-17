@@ -12,14 +12,13 @@ resource "aws_lb" "simplr-nlb" {
 resource "aws_lb_target_group" "simplr-nlb-tg" {
   name        = "simplr-nlb-tg"
   port        = 80
-  protocol    = "HTTP"
+  protocol    = "TCP"
   target_type = "ip"
   vpc_id      = var.vpcid
     health_check {
     interval            = 30
     protocol            = "TCP"
     port                = "traffic-port"
-    timeout             = 10
     healthy_threshold   = 3
     unhealthy_threshold = 3
   }
