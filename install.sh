@@ -1,6 +1,6 @@
 echo "installing terraform"
 
-sudo apt-get install unzip
+sudo yum install unzip
 
 wget https://releases.hashicorp.com/terraform/0.12.18/terraform_0.12.18_linux_amd64.zip
 
@@ -52,6 +52,8 @@ cd infra
 terraform init 
 
 terraform apply --auto-approve
+
+cd ..
 
 eksctl create cluster -f cluster.yaml
 

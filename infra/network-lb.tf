@@ -6,21 +6,36 @@ resource "aws_lb" "simplr-nlb" {
 
   enable_deletion_protection = false
 
-   target_groups = [
-    {
-      name_prefix          = "simplr-nlb-tg"
-      backend_protocol     = "TCP"
-      backend_port         = 80
-      target_type          = "ip"
-      health_check = {
-        enabled             = true
-        interval            = 30
-        path                = "/"
-        port                = "traffic-port"
-        healthy_threshold   = 3
-        unhealthy_threshold = 3
-        timeout             = 10
-      }
-    },
-  ]
+  
+}
+
+resource "aws_lb_target_group" "simplr-nlb-tg" {
+  name        = "simplr-nlb-tg"
+  port        = 80
+  protocol    = "HTTP"
+  target_type = "ip"
+  vpc_id      = var.vpcid
+    health_check {
+    interval            = 30
+    path                = "/"
+    protocol            = "TCP"
+    port                = "traffic port"
+    timeout             = 10
+    healthy_threshold   = 3
+    unhealthy_threshold = 3
+  }
+}
+
+
+resource "aws_lb_listener" "frontend_http_tcp" {
+ 
+  load_balancer_arn = aws_lb.simplr-nlb.arn
+
+  port     = 80
+  protocol = "TCP"
+
+  default_action {
+    target_group_arn = aws_lb_target_group.simplr-nlb-tg.arn
+    type             = "forward"
+  }
 }
