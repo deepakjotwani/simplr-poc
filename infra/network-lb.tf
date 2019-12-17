@@ -17,7 +17,6 @@ resource "aws_lb_target_group" "simplr-nlb-tg" {
   vpc_id      = var.vpcid
     health_check {
     interval            = 30
-    path                = "/"
     protocol            = "TCP"
     port                = "traffic-port"
     timeout             = 10
