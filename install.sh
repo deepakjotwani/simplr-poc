@@ -68,3 +68,5 @@ kubectl apply -f./Frontend
 kubectl apply -f./Backend
 kubectl apply -f ./ingress-controller/ingress.yaml
 
+aws cloudformation create-stack --stack-name simplr-nlb-alb --region us-east-2 --template-body file://nlb.json --parameters file://parameters.json --capabilities CAPABILITY_AUTO_EXPAND
+

@@ -1,0 +1,18 @@
+[
+    {
+      "ParameterKey": "ALBListenerPort",
+      "ParameterValue": "80"
+    },
+    {
+        "ParameterKey": "S3BucketName",
+        "ParameterValue": "simplr-alb-ip-address"
+    }, 
+    {
+        "ParameterKey": "NLBTargetGroupARN",
+        "ParameterValue": "arn:aws:elasticloadbalancing:us-east-2:838660873199:targetgroup/simplr-nlb-tg/e77e094611eafc7c"
+    }, 
+    {
+      "ParameterKey": "InternalALBDNSName",
+      "ParameterValue": "internal-ef33a4f9-default-ingress-e8c7-1657364132.us-east-2.elb.amazonaws.com"
+    }
+  ]
