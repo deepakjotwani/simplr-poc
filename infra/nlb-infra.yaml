@@ -30,17 +30,13 @@ Parameters:
       Port: 80
       Protocol: TCP
       VpcId: !Ref vpcid
-      TargetType: "ip" 
-
-
-  
-
+      TargetType: "ip"   
 
   simple-nlb-listener:
     Type: 'AWS::ElasticLoadBalancingV2::Listener'
     Properties:
       DefaultActions:
-      - TargetGroupArn: !Ref DefaultTargetGroup
+      - TargetGroupArn: !Ref simplr-nlb-tg
         Type: forward
       LoadBalancerArn: !Ref simplr-nlb
       Port: 80
