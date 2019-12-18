@@ -1,0 +1,47 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'ECS: service that runs on an ECS cluster based on ecs/cluster.yaml and uses a dedicated ALB, a cloudonaut.io template'
+Parameters:
+  vpcid:
+    Description: 'vpcid of the account'
+    Type: String
+  subnets:
+    Description: 'subnets of the account'
+    Type: List
+  
+  
+  simplr-nlb:
+    Type: 'AWS::ElasticLoadBalancingV2::LoadBalancer'
+    Properties:
+      Name: "simplr-nlb"s
+      Scheme: "internet-facing"
+      Type: network
+      Subnets: !Ref subnets
+
+  simplr-nlb-tg: 
+    Type: 'AWS::ElasticLoadBalancingV2::TargetGroup'
+    Properties:
+      HealthCheckEnabled: true
+      HealthCheckIntervalSeconds: 30
+      HealthCheckPort: traffic-port
+      HealthCheckProtocol: TCP
+      HealthyThresholdCount: 3
+      UnhealthyThresholdCount: 3
+      Name: simplr-nlb-tg
+      Port: 80
+      Protocol: TCP
+      VpcId: !Ref vpcid
+      TargetType: "ip" 
+
+
+  
+
+
+  simple-nlb-listener:
+    Type: 'AWS::ElasticLoadBalancingV2::Listener'
+    Properties:
+      DefaultActions:
+      - TargetGroupArn: !Ref DefaultTargetGroup
+        Type: forward
+      LoadBalancerArn: !Ref simplr-nlb
+      Port: 80
+      Protocol: TCP

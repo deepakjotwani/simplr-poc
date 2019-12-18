@@ -25,7 +25,7 @@ resource "aws_lb_target_group" "simplr-nlb-tg" {
 }
 
 
-resource "aws_lb_listener" "frontend_http_tcp" {
+resource "aws_lb_listener" "simple-nlb-listener" {
  
   load_balancer_arn = aws_lb.simplr-nlb.arn
 
