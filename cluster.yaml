@@ -1,6 +1,3 @@
-AWSTemplateFormatVersion: '2010-09-09'
-Description: 'Creates Cluster and NodeGroup'
-
 apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 metadata:
@@ -17,7 +14,7 @@ vpc:
       us-east-2a:
           id: "subnet-0d291755f72dd5b83"
 iam:
-  serviceRoleARN: Fn::ImportValue: !Sub "${rolesinfra}-ClusterRoleARN"
+  serviceRoleARN: CLUSTER_ROLE_ARN
 
 nodeGroups:
   - name: simplr-demo-nodegroup
@@ -27,8 +24,23 @@ nodeGroups:
     securityGroups:
       attachIDs: ['sg-0144f9d6e9e718b50']
     iam:
-      instanceProfileARN: Fn::ImportValue: !Sub "${rolesinfra}-InstanceProfileARN"
-      instanceRoleARN: Fn::ImportValue: !Sub "${rolesinfra}-NodeGroupRoleARN"
+      instanceProfileARN: INSTANCE_PROFILE_ARN
+      instanceRoleARN: NODEGROUP_ROLE_ARN
+      withAddonPolicies:
+          ImageBuilder: true # allow r/w access to ECR            
+          ALBIngress: true
+        
+
+
+
+# NodeGrpsSecG 
+# If you just want to attach extra SGs, you shouldn't need to set withLocal and withShared. These settings are for those who need to use pre-existing SGs only.
+
+# Shared SG is one that we create for all nodegroups, it allows for cluster-wide connectivity between all nodes in all nodegroups. Normally you want to use withShared: true, and it is the default. If you disable it, you isolate the given nodegroup from other nodegroups, unless you use a custom SG that caters for what you need.
+
+# And local SG is one that we create specifically for a given nodegroup only, it is there to control external access as well as access to control plane. E.g. when you enable SSH, the local SG will be were port 22 will be open. Just like withShared, withLocal is enabled by default.
+
+# Hope this makes clearer. As I said above, documentation is needed and help would be hugely appreciated, but we might want to create a new website first, so we can have topical pages.
       
 
 

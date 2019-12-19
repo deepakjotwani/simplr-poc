@@ -1,3 +1,5 @@
+#!/bin/sh 
+
 echo "installing aws-iam-authenticator"
 
 curl -o aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/1.14.6/2019-08-22/bin/linux/amd64/aws-iam-authenticator
@@ -37,8 +39,9 @@ echo " eksctl succesfully installed"
 aws cloudformation create-stack --stack-name rolesinfra --region us-east-2 --template-body file://infra/roles.yaml --capabilities  CAPABILITY_IAM  CAPABILITY_NAMED_IAM  CAPABILITY_AUTO_EXPAND
 
 aws cloudformation create-stack --stack-name nlbinfra --region us-east-2 --template-body file://infra/nlb-infra.yaml --capabilities  CAPABILITY_IAM  CAPABILITY_NAMED_IAM  CAPABILITY_AUTO_EXPAND
-
-# eksctl create cluster -f cluster.yaml
+chmod +x *.sh
+./variables.sh
+eksctl create cluster -f cluster.yaml
 
 # aws cloudformation create-stack --stack-name simplr-nlb-alb --region us-east-2 --template-body file://infra/nlb-alb.json --capabilities  CAPABILITY_IAM  CAPABILITY_NAMED_IAM  CAPABILITY_AUTO_EXPAND
 
