@@ -34,13 +34,13 @@ echo " eksctl succesfully installed"
 
 
 
-aws cloudformation create-stack --stack-name simplr-nlb-alb --region us-east-2 --template-body file://infra/roles.yaml --capabilities  CAPABILITY_IAM  CAPABILITY_NAMED_IAM  CAPABILITY_AUTO_EXPAND
+aws cloudformation create-stack --stack-name roles-infra --region us-east-2 --template-body file://infra/roles.yaml --capabilities  CAPABILITY_IAM  CAPABILITY_NAMED_IAM  CAPABILITY_AUTO_EXPAND
 
-aws cloudformation create-stack --stack-name simplr-nlb-infra --region us-east-2 --template-body file://infra/nlb-infra.yaml --parameters file://infra/params-infra.json --capabilities  CAPABILITY_IAM  CAPABILITY_NAMED_IAM  CAPABILITY_AUTO_EXPAND
+aws cloudformation create-stack --stack-name simplr-nlb-infra --region us-east-2 --template-body file://infra/nlb-infra.yaml --parameters file://infra/parameters.json --capabilities  CAPABILITY_IAM  CAPABILITY_NAMED_IAM  CAPABILITY_AUTO_EXPAND
 
 eksctl create cluster -f cluster.yaml
 
-aws cloudformation create-stack --stack-name simplr-nlb-alb --region us-east-2 --template-body file://infra/nlb-alb.json --parameters file://infra/parameters-nlb-alb.json --capabilities  CAPABILITY_IAM  CAPABILITY_NAMED_IAM  CAPABILITY_AUTO_EXPAND
+aws cloudformation create-stack --stack-name simplr-nlb-alb --region us-east-2 --template-body file://infra/nlb-alb.json --parameters file://infra/parameters.json --capabilities  CAPABILITY_IAM  CAPABILITY_NAMED_IAM  CAPABILITY_AUTO_EXPAND
 
 
 
