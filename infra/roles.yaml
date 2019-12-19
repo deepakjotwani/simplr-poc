@@ -1,6 +1,5 @@
 Resources:
-  eksclusteriamrole:
-    
+  eksclusteriamrole:    
     Type: 'AWS::IAM::Role'
     Properties:
       RoleName: eks-cluster-iamrole 
@@ -136,3 +135,20 @@ Resources:
             Resource: "*"          
       Roles:
         - !Ref eksnodegroupiamrole
+
+Outputs:
+    eksclusteriamrole:
+      Description: The ARN for the ClusterRole
+      Value: !GetAtt eksclusteriamrole.Arn
+      Export:
+        Name: !Sub "${AWS::StackName}-ClusterRoleARN"
+    eksnodegroupiamrole:
+      Description: The ARN of the NodeGroupRole
+      Value: !GetAtt eksnodegroupiamrole.Arn
+      Export:
+        Name: !Sub "${AWS::StackName}-NodeGroupRoleARN"
+    nodegroupinstanceprofile:
+      Description: The ARN of the InstanceProfile
+      Value: !GetAtt nodegroupinstanceprofile.Arn
+      Export:
+        Name: !Sub "${AWS::StackName}-InstanceProfileARN"
