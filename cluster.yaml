@@ -1,3 +1,6 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Creates Cluster and NodeGroup'
+
 apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 metadata:
@@ -14,7 +17,7 @@ vpc:
       us-east-2a:
           id: "subnet-0d291755f72dd5b83"
 iam:
-  serviceRoleARN: "arn:aws:iam::838660873199:role/eks-cluster-iamrole"
+  serviceRoleARN: Fn::ImportValue: !Sub "${rolesinfra}-ClusterRoleARN"
 
 nodeGroups:
   - name: simplr-demo-nodegroup
@@ -24,8 +27,8 @@ nodeGroups:
     securityGroups:
       attachIDs: ['sg-0144f9d6e9e718b50']
     iam:
-      instanceProfileARN: "arn:aws:iam::838660873199:instance-profile/eks-node-group-instance-profile"
-      instanceRoleARN: "arn:aws:iam::838660873199:role/eks-node-group-iamrole"
+      instanceProfileARN: Fn::ImportValue: !Sub "${rolesinfra}-InstanceProfileARN"
+      instanceRoleARN: Fn::ImportValue: !Sub "${rolesinfra}-NodeGroupRoleARN"
       
 
 

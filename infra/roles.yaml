@@ -1,3 +1,5 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Creates and infra for Roles'
 Resources:
   eksclusteriamrole:    
     Type: 'AWS::IAM::Role'

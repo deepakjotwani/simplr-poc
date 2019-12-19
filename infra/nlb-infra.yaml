@@ -1,23 +1,24 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: 'ECS: service that runs on an ECS cluster based on ecs/cluster.yaml and uses a dedicated ALB, a cloudonaut.io template'
+Description: 'Creates and infra for Netwrok Load Balancer'
 Parameters:
   vpcid:
     Description: 'vpcid of the account'
     Type: String
   subnets:
     Description: 'subnets of the account'
-    Type: List
+    Type: List<AWS::EC2::Subnet::Id>  
   
-  
-  simplr-nlb:
+Resources:
+
+  SimplrNetworkLoadBalancer:
     Type: 'AWS::ElasticLoadBalancingV2::LoadBalancer'
     Properties:
-      Name: "simplr-nlb"s
+      Name: "simplr-nlb"
       Scheme: "internet-facing"
       Type: network
       Subnets: !Ref subnets
 
-  simplr-nlb-tg: 
+  SimplrNLBTargetGroup: 
     Type: 'AWS::ElasticLoadBalancingV2::TargetGroup'
     Properties:
       HealthCheckEnabled: true
@@ -32,12 +33,47 @@ Parameters:
       VpcId: !Ref vpcid
       TargetType: "ip"   
 
-  simple-nlb-listener:
+  SimplrNLBListener:
     Type: 'AWS::ElasticLoadBalancingV2::Listener'
     Properties:
       DefaultActions:
-      - TargetGroupArn: !Ref simplr-nlb-tg
+      - TargetGroupArn: !Ref SimplrNLBTargetGroup
         Type: forward
-      LoadBalancerArn: !Ref simplr-nlb
+      LoadBalancerArn: !Ref SimplrNetworkLoadBalancer
       Port: 80
       Protocol: TCP
+  
+  SimplrNLBS3: # cannot be deleted with data
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: "simplr-alb-ip-address"
+      
+  BucketPolicyPublic:
+    Type: 'AWS::S3::BucketPolicy'
+    Properties:
+      Bucket: !Ref SimplrNLBS3
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Principal: '*'
+          Action: 's3:GetObject'
+          Effect: Allow
+          Resource: !Sub '${SimplrNLBS3.Arn}/*'
+
+Outputs:
+    SimplrNlbARN:
+      Description: The ARN for the Network Load Balancer
+      Value: !Ref SimplrNetworkLoadBalancer
+      Export:
+        Name: !Sub "${AWS::StackName}-SimplrNlbARN"
+    SimplrNlbTgARN:
+      Description: The ARN of the Target group of Network Load Balancer
+      Value: !Ref SimplrNLBTargetGroup
+      Export:
+        Name: !Sub "${AWS::StackName}-SimplrNlbTgARN"
+    S3BucketName:
+      Description: The Name of the S3 Bucket
+      Value: !Ref SimplrNLBS3
+      Export:
+        Name: !Sub "${AWS::StackName}-S3BucketName"
+    

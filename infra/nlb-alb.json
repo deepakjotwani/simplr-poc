@@ -20,7 +20,7 @@
         },
         "ALBListenerPort": {
             "Type": "String",
-            "Default": "",
+            "Default": "80",
             "Description": "Enter the traffic listener port of your internal Application Load Balancer"
         },
         "MAXDNSLookupPerInvocation": {
