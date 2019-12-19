@@ -149,8 +149,3 @@ Outputs:
       Value: !GetAtt eksnodegroupiamrole.Arn
       Export:
         Name: !Sub "${AWS::StackName}-NodeGroupRoleARN"
-    nodegroupinstanceprofile:
-      Description: The ARN of the InstanceProfile
-      Value: !GetAtt nodegroupinstanceprofile.Arn
-      Export:
-        Name: !Sub "${AWS::StackName}-InstanceProfileARN"
