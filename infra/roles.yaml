@@ -1,7 +1,9 @@
 Resources:
-  eks-cluster-iamrole:
+  eksclusteriamrole:
+    
     Type: 'AWS::IAM::Role'
     Properties:
+      RoleName: eks-cluster-iamrole 
       AssumeRolePolicyDocument:
         Version: 2012-10-17
         Statement:
@@ -16,9 +18,10 @@ Resources:
         - arn:aws:iam::aws:policy/AmazonEKSClusterPolicy            
         - arn:aws:iam::aws:policy/AmazonEKSServicePolicy  
 
-  eks-node-group-iamrole:
+  eksnodegroupiamrole:
     Type: 'AWS::IAM::Role'
     Properties:
+      RoleName: eks-node-group-iamrole
       AssumeRolePolicyDocument:
         Version: 2012-10-17
         Statement:
@@ -34,17 +37,17 @@ Resources:
         - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
         - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly  
 
-  nodegroup-instance-profile:
+  nodegroupinstanceprofile:
     Type: AWS::IAM::InstanceProfile
     Properties: 
       InstanceProfileName: "eks-node-group-instance-profile"
       Roles: 
-        - !Ref eks-node-group-iamrole
+        - !Ref eksnodegroupiamrole
 
   ALBIngressControllerIAMPolicy:
     Type: 'AWS::IAM::Policy'
     Properties:
-      PolicyName: root
+      PolicyName: ALBIngressControllerIAMPolicy
       PolicyDocument:
         Version: 2012-10-17
         Statement:
@@ -132,4 +135,4 @@ Resources:
             - waf:GetWebACL
             Resource: "*"          
       Roles:
-        - !Ref eks-node-group-iamrole
+        - !Ref eksnodegroupiamrole
