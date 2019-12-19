@@ -49,7 +49,7 @@ Resources:
   SimplrNLBS3: # cannot be deleted with data
     Type: 'AWS::S3::Bucket'
     Properties:
-      BucketName: "simplr-alb-ip-address"
+      BucketName: "simplr-infra-bucket"
       
   BucketPolicyPublic:
     Type: 'AWS::S3::BucketPolicy'
