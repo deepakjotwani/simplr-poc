@@ -38,7 +38,7 @@ aws cloudformation create-stack --stack-name rolesinfra --region us-east-2 --tem
 
 aws cloudformation create-stack --stack-name nlbinfra --region us-east-2 --template-body file://infra/nlb-infra.yaml --capabilities  CAPABILITY_IAM  CAPABILITY_NAMED_IAM  CAPABILITY_AUTO_EXPAND
 
-eksctl create cluster -f cluster.yaml
+# eksctl create cluster -f cluster.yaml
 
 # aws cloudformation create-stack --stack-name simplr-nlb-alb --region us-east-2 --template-body file://infra/nlb-alb.json --capabilities  CAPABILITY_IAM  CAPABILITY_NAMED_IAM  CAPABILITY_AUTO_EXPAND
 
