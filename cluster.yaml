@@ -26,9 +26,6 @@ nodeGroups:
     iam:
       instanceProfileARN: INSTANCE_PROFILE_ARN
       instanceRoleARN: NODEGROUP_ROLE_ARN
-      withAddonPolicies:
-          ImageBuilder: true # allow r/w access to ECR            
-          ALBIngress: true
         
 
 
