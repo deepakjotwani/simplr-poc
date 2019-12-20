@@ -15,9 +15,9 @@ eksctl create cluster -f cluster.yaml
 
 
 
-#   kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/v1.1.4/docs/examples/rbac-role.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/v1.1.4/docs/examples/rbac-role.yaml
   
-#   kubectl apply -f ./ingress-controller/alb-ingress-controller.yaml
+kubectl apply -f ./ingress-controller/alb-ingress-controller.yaml
 
 #  kubectl apply -f ./accesscontrol
 # kubectl apply -f./Frontend
