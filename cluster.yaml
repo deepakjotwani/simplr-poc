@@ -1,7 +1,7 @@
 apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 metadata:
-  name: simplr-demo-cluster
+  name: simpplr-preprod
   region: us-east-2
 vpc:
   id: "vpc-08c54b71caa4efdc9"
@@ -17,7 +17,7 @@ iam:
   serviceRoleARN: CLUSTER_ROLE_ARN
 
 nodeGroups:
-  - name: simplr-demo-nodegroup
+  - name: simpplr-preprod
     instanceType: t2.micro
     desiredCapacity: 3
     privateNetworking: false
