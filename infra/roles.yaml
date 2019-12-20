@@ -3,7 +3,7 @@ Description: 'Creates and infra for Roles'
 Resources:
   eksclusteriamrole:     
     Type: 'AWS::IAM::Role'
-    DeletionPolicy : Retain 
+    DeletionPolicy : Delete 
     Properties:
       RoleName: eks-cluster-iamrole 
       AssumeRolePolicyDocument:
@@ -22,7 +22,7 @@ Resources:
 
   eksnodegroupiamrole:
     Type: 'AWS::IAM::Role'
-    DeletionPolicy : Retain 
+    DeletionPolicy : Delete 
     Properties:
       RoleName: eks-node-group-iamrole
       AssumeRolePolicyDocument:
@@ -42,7 +42,7 @@ Resources:
 
   nodegroupinstanceprofile:
     Type: AWS::IAM::InstanceProfile
-    DeletionPolicy : Retain 
+    DeletionPolicy : Delete 
     Properties: 
       InstanceProfileName: "eks-node-group-instance-profile"
       Roles: 
@@ -50,7 +50,7 @@ Resources:
 
   ALBIngressControllerIAMPolicy:
     Type: 'AWS::IAM::Policy'
-    DeletionPolicy : Retain 
+    DeletionPolicy : Delete 
     Properties:
       PolicyName: ALBIngressControllerIAMPolicy
       PolicyDocument:

@@ -1,19 +1,10 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: 'Creates and infra for Netwrok Load Balancer'
-# Parameters:
-#   vpcid:
-#     Description: 'vpcid of the account'
-#     Type: String
-#     Default: "vpc-08c54b71caa4efdc9"
-  # subnets:
-  #   Description: 'subnets of the account'
-  #   Type: List<AWS::EC2::Subnet::Id>  
-  #   Default: ["subnet-06e2e100ebfa9a574","subnet-0bbeda2c05f614427","subnet-0d291755f72dd5b83"]  
 Resources:
 
   SimplrNetworkLoadBalancer:
     Type: 'AWS::ElasticLoadBalancingV2::LoadBalancer'
-    DeletionPolicy: Retain
+    DeletionPolicy: Delete
     Properties:
       Name: "simplr-nlb"
       Scheme: "internet-facing"
@@ -22,7 +13,7 @@ Resources:
 
   SimplrNLBTargetGroup: 
     Type: 'AWS::ElasticLoadBalancingV2::TargetGroup'
-    DeletionPolicy: Retain
+    DeletionPolicy: Delete
     Properties:
       HealthCheckEnabled: true
       HealthCheckIntervalSeconds: 30
@@ -38,7 +29,7 @@ Resources:
 
   SimplrNLBListener:
     Type: 'AWS::ElasticLoadBalancingV2::Listener'
-    DeletionPolicy: Retain
+    DeletionPolicy: Delete
     Properties:
       DefaultActions:
       - TargetGroupArn: !Ref SimplrNLBTargetGroup
@@ -49,7 +40,7 @@ Resources:
   
   SimplrNLBS3: # cannot be deleted with data
     Type: 'AWS::S3::Bucket'
-    DeletionPolicy: Retain
+    DeletionPolicy: Delete
     Properties:
       BucketName: "simplr-infra-bucket"
       
