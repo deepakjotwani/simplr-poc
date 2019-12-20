@@ -40,7 +40,7 @@ sudo yum install jq -y
 echo " jq succesfully installed"
 
 
-chmod +x *.sh
+./setup.sh
 
 
 
