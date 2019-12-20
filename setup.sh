@@ -9,7 +9,7 @@ aws cloudformation create-stack --stack-name nlbinfra --region us-east-2 --templ
 
 aws cloudformation --region us-east-2 list-exports
 
-./varibles.sh
+./variables.sh
 
 cat cluster.yaml
 
