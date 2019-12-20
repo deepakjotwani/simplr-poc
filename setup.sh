@@ -9,6 +9,7 @@ aws cloudformation create-stack --stack-name nlbinfra --region us-east-2 --templ
 
 aws cloudformation --region us-east-2 list-exports
 
+sleep 10
 ./variables.sh
 
 eksctl create cluster -f cluster.yaml
