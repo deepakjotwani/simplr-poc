@@ -3,7 +3,11 @@ aws cloudformation create-stack --stack-name rolesinfra --region us-east-2 --tem
 
 aws cloudformation create-stack --stack-name nlbinfra --region us-east-2 --template-body file://infra/nlb-infra.yaml --capabilities  CAPABILITY_IAM  CAPABILITY_NAMED_IAM  CAPABILITY_AUTO_EXPAND
 
-sleep 10m
+until aws cloudformation --region us-east-2 list-exports | grep -q ""rolesinfra"";
+do 
+  sleep 1; 
+done
+
 
 ./variables.sh
 
@@ -20,8 +24,8 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingre
 kubectl apply -f ./ingress-controller/alb-ingress-controller.yaml
 
 #  kubectl apply -f ./accesscontrol
-# kubectl apply -f./Frontend
-# kubectl apply -f./Backend
-# kubectl apply -f ./ingress-controller/ingress.yaml
+ kubectl apply -f./Frontend
+ kubectl apply -f./Backend
+ kubectl apply -f ./ingress-controller/ingress.yaml
 
 
