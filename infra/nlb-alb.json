@@ -8,16 +8,6 @@
             "Default": "",
             "Description": "Enter the DNS name of your internal Application Load Balancer name. e.g.application-load-balancer.elb.us-east-1.amazonaws.com"
         },
-        "NLBTargetGroupARN": {
-            "Type": "String",
-            "Default": "",
-            "Description": "Enter the target group ARN which you want the Application Load Balancer to be registered to"
-        },
-        "S3BucketName": {
-            "Type": "String",
-            "Default": "",
-            "Description": "Enter the S3 Bucket name that you want to store Application Load Balancer's node IP addresses"
-        },
         "ALBListenerPort": {
             "Type": "String",
             "Default": "80",
@@ -142,12 +132,8 @@
                         "ALB_DNS_NAME": {
                             "Ref": "InternalALBDNSName"
                         },
-                        "NLB_TG_ARN": {
-                            "Ref": "NLBTargetGroupARN"
-                        },
-                        "S3_BUCKET": {
-                            "Ref": "S3BucketName"
-                        },
+                        "NLB_TG_ARN": {"Fn::ImportValue" : {"Fn::Sub" : "${nlbinfra}-SimplrNlbTgARN"}},
+                        "S3_BUCKET": {"Fn::ImportValue" : {"Fn::Sub" : "${nlbinfra}-S3BucketName"}},
                         "MAX_LOOKUP_PER_INVOCATION": {
                             "Ref": "MAXDNSLookupPerInvocation"
                         },

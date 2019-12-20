@@ -13,6 +13,7 @@ Resources:
 
   SimplrNetworkLoadBalancer:
     Type: 'AWS::ElasticLoadBalancingV2::LoadBalancer'
+    DeletionPolicy: Retain
     Properties:
       Name: "simplr-nlb"
       Scheme: "internet-facing"
@@ -21,6 +22,7 @@ Resources:
 
   SimplrNLBTargetGroup: 
     Type: 'AWS::ElasticLoadBalancingV2::TargetGroup'
+    DeletionPolicy: Retain
     Properties:
       HealthCheckEnabled: true
       HealthCheckIntervalSeconds: 30
@@ -36,6 +38,7 @@ Resources:
 
   SimplrNLBListener:
     Type: 'AWS::ElasticLoadBalancingV2::Listener'
+    DeletionPolicy: Retain
     Properties:
       DefaultActions:
       - TargetGroupArn: !Ref SimplrNLBTargetGroup
@@ -46,6 +49,7 @@ Resources:
   
   SimplrNLBS3: # cannot be deleted with data
     Type: 'AWS::S3::Bucket'
+    DeletionPolicy: Retain
     Properties:
       BucketName: "simplr-infra-bucket"
       

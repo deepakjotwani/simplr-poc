@@ -28,6 +28,9 @@ kubectl create namespace preprod
 #  kubectl apply -f ./ingress-controller/ingress.yaml
 
 
-# aws cloudformation create-stack --stack-name simplr-nlb-alb --region us-east-2 --template-body file://infra/nlb-alb.json --capabilities  CAPABILITY_IAM  CAPABILITY_NAMED_IAM  CAPABILITY_AUTO_EXPAND
+# aws cloudformation create-stack --stack-name simplr-nlb-alb --region us-east-2 --template-body file://infra/nlb-alb.yaml --capabilities  CAPABILITY_IAM  CAPABILITY_NAMED_IAM  CAPABILITY_AUTO_EXPAND
+
+#  aws cloudformation wait stack-create-complete --region us-east-2 --stack-name simplr-nlb-alb 
+
 
 

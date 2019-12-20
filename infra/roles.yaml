@@ -1,8 +1,9 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: 'Creates and infra for Roles'
 Resources:
-  eksclusteriamrole:    
+  eksclusteriamrole:     
     Type: 'AWS::IAM::Role'
+    DeletionPolicy : Retain 
     Properties:
       RoleName: eks-cluster-iamrole 
       AssumeRolePolicyDocument:
@@ -12,7 +13,7 @@ Resources:
             Principal:
               Service:
                 - eks.amazonaws.com
-            Action:
+            Action: 
               - 'sts:AssumeRole'
       Path: /
       ManagedPolicyArns:
@@ -21,6 +22,7 @@ Resources:
 
   eksnodegroupiamrole:
     Type: 'AWS::IAM::Role'
+    DeletionPolicy : Retain 
     Properties:
       RoleName: eks-node-group-iamrole
       AssumeRolePolicyDocument:
@@ -40,6 +42,7 @@ Resources:
 
   nodegroupinstanceprofile:
     Type: AWS::IAM::InstanceProfile
+    DeletionPolicy : Retain 
     Properties: 
       InstanceProfileName: "eks-node-group-instance-profile"
       Roles: 
@@ -47,6 +50,7 @@ Resources:
 
   ALBIngressControllerIAMPolicy:
     Type: 'AWS::IAM::Policy'
+    DeletionPolicy : Retain 
     Properties:
       PolicyName: ALBIngressControllerIAMPolicy
       PolicyDocument:
