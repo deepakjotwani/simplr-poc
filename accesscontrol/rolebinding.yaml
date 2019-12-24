@@ -1,28 +1,11 @@
-kind: RoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
 metadata:
-  name: deepakdefault
-  namespace: default
+  name: deepak-default-role-binding
 subjects:
 - kind: User
   name: deepakdefault
   apiGroup: rbac.authorization.k8s.io
 roleRef:
-  kind: Role
-  name: deepakdefault
-  apiGroup: rbac.authorization.k8s.io
----
-
-kind: RoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: deepakkubesystem
-  namespace: default
-subjects:
-- kind: User
-  name: deepakkubesystem
-  apiGroup: rbac.authorization.k8s.io
-roleRef:
-  kind: Role
-  name: deepakkubesystem
+  kind: ClusterRole #this must be Role or ClusterRole
+  name: deepakdefault-role # this must match the name of the Role or ClusterRole you wish to bind to
   apiGroup: rbac.authorization.k8s.io
