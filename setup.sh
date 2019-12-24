@@ -7,16 +7,21 @@ aws cloudformation create-stack --stack-name nlbinfra --region us-east-2 --templ
 
  aws cloudformation wait stack-create-complete --region us-east-2 --stack-name nlbinfra 
 
+
+aws cloudformation create-stack --stack-name simpplrnwstack --template-body file://networkstack/cf_template_master.yaml --parameters file://networkstack/parameters.json --capabilities  CAPABILITY_IAM  CAPABILITY_NAMED_IAM  CAPABILITY_AUTO_EXPAND
+
+aws cloudformation wait stack-create-complete --region us-east-2 --stack-name simpplrnwstack 
+
 aws cloudformation --region us-east-2 list-exports
 
 sleep 10
 ./variables.sh
 
-eksctl create cluster -f cluster.yaml
+# eksctl create cluster -f cluster.yaml
 
- kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/v1.1.4/docs/examples/rbac-role.yaml #RBAC Role for alb ingress
+#  kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/v1.1.4/docs/examples/rbac-role.yaml #RBAC Role for alb ingress
 
- kubectl apply -f ./ingress-controller/alb-ingress-controller.yaml
+#  kubectl apply -f ./ingress-controller/alb-ingress-controller.yaml
 
 #Following will be done with 
 # kubectl create namespace preprod  

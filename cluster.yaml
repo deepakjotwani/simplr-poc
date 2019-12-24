@@ -4,15 +4,15 @@ metadata:
   name: simpplr-preprod
   region: us-east-2
 vpc:
-  id: "vpc-08c54b71caa4efdc9"
+  id: VPC_ID
   subnets:
-    public:
-      us-east-2c:
-          id: "subnet-06e2e100ebfa9a574"
-      us-east-2b:
-          id: "subnet-0bbeda2c05f614427"
-      us-east-2a:
-          id: "subnet-0d291755f72dd5b83"
+    Private:
+      AZ1:
+          id: SUBNET1
+      AZ2:
+          id: SUBNET2
+      AZ3:
+          id: SUBNET3
 iam:
   serviceRoleARN: CLUSTER_ROLE_ARN
 
