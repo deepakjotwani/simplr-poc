@@ -40,8 +40,5 @@ sudo yum install jq -y
 echo " jq succesfully installed"
 
 
-./setup.sh
-
-
 
 
