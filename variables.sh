@@ -30,10 +30,13 @@ export SUBNET3="$(echo $PRIVATE_SUBNET_IDS |  cut -d',' -f3)"
 sed -i "s|SUBNET3|${SUBNET3}|" cluster.yaml
 
 export ENV="$(cat clustervalues.json  | jq '.Exports[] | select(.Name == "enviroment") | .Value'  | tr -d \'\")"
-
+sed -i "s|ENV|${ENV}|" cluster.yaml
 
 export DESIRED_CAPACITY="$(cat clustervalues.json  | jq '.Exports[] | select(.Name == "desiredcapacity") | .Value'  | tr -d \'\")"
+sed -i "s|DESIRED_CAPACITY|${DESIRED_CAPACITY}|" cluster.yaml
+
 export INSTANCE_TYPE="$(cat clustervalues.json  | jq '.Exports[] | select(.Name == "instancetype") | .Value'  | tr -d \'\")"
+sed -i "s|INSTANCE_TYPE|${INSTANCE_TYPE}|" cluster.yaml
 
 
 
