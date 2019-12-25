@@ -21,7 +21,7 @@ sed -i "s|NETWORK_STACK|$2|" variables.sh
 
 #  aws cloudformation wait stack-create-complete --region us-east-2 --stack-name nlbinfra 
 
-cat variables.sh 
+./variables.sh 
 
 # eksctl create cluster -f cluster.yaml
 
