@@ -11,6 +11,7 @@ aws cloudformation create-stack --stack-name $3 --region $1 --template-body file
 
 aws cloudformation wait stack-create-complete --region $1 --stack-name $3
 
+sleep 10
 sed -i "s|REGION1|$1|" variables.sh
 sed -i "s|ROLE_STACK|$3|" variables.sh
 sed -i "s|NETWORK_STACK|$2|" variables.sh
