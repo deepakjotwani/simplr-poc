@@ -41,4 +41,4 @@ echo " jq succesfully installed"
 
 
 
-
+echo " Arg1 : Region     Arg2 : N/WInfraStackName     Arg3: RolesInfraStackName "
