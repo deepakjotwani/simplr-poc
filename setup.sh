@@ -21,7 +21,7 @@ aws cloudformation --region us-east-2 list-exports
 sleep 10
 ./variables.sh
 
-# eksctl create cluster -f cluster.yaml
+eksctl create cluster -f cluster.yaml
 
 #  kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/v1.1.4/docs/examples/rbac-role.yaml #RBAC Role for alb ingress
 
