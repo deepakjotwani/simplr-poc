@@ -12,11 +12,13 @@ aws cloudformation create-stack --stack-name $3 --region $1 --template-body file
 aws cloudformation wait stack-create-complete --region $1 --stack-name $3
 
 
+
+
 # aws cloudformation create-stack --stack-name nlbinfra --region us-east-2 --template-body file://infra/nlb-infra.yaml --parameters file://infra/parameters.json --capabilities CAPABILITY_IAM  CAPABILITY_NAMED_IAM  CAPABILITY_AUTO_EXPAND
 
 #  aws cloudformation wait stack-create-complete --region us-east-2 --stack-name nlbinfra 
 
-./variables.sh
+./variables.sh $2 $3
 
 # eksctl create cluster -f cluster.yaml
 
