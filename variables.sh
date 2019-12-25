@@ -17,11 +17,8 @@ export AZ2="$(aws cloudformation --region us-east-2 list-exports  | jq '.Exports
 sed -i "s|AZ2|${AZ2}|" cluster.yaml
 export AZ3="$(aws cloudformation --region us-east-2 list-exports  | jq '.Exports[] | select(.Name == "'$VPC_ID':availability-zone-3:id") | .Value'  | tr -d \'\")"
 sed -i "s|AZ3|${AZ3}|" cluster.yaml
-                   
-
+                 
 export PRIVATE_SUBNET_IDS="$(aws cloudformation --region us-east-2 list-exports  | jq '.Exports[] | select(.Name == "'$VPC_ID':private-subnet:ids") | .Value' | tr -d \'\")"
-
-
 
 export SUBNET1="$(echo $PRIVATE_SUBNET_IDS |  cut -d',' -f1)"
 sed -i "s|SUBNET1|${SUBNET1}|" cluster.yaml
@@ -31,6 +28,12 @@ sed -i "s|SUBNET2|${SUBNET2}|" cluster.yaml
 
 export SUBNET3="$(echo $PRIVATE_SUBNET_IDS |  cut -d',' -f3)"
 sed -i "s|SUBNET3|${SUBNET3}|" cluster.yaml
+
+export ENV="$(cat clustervalues.json  | jq '.Exports[] | select(.Name == "enviroment") | .Value'  | tr -d \'\")"
+
+
+export DESIRED_CAPACITY="$(cat clustervalues.json  | jq '.Exports[] | select(.Name == "desiredcapacity") | .Value'  | tr -d \'\")"
+export INSTANCE_TYPE="$(cat clustervalues.json  | jq '.Exports[] | select(.Name == "instancetype") | .Value'  | tr -d \'\")"
 
 
 

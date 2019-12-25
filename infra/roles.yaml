@@ -1,11 +1,22 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: 'Creates and infra for Roles'
+
+Parameters:
+  enviroment:
+    Type: String
+    AllowedValues: 
+      - dev
+      - qa
+    Description: ENV for roles(dev or qa)   
+
 Resources:
   eksclusteriamrole:     
     Type: 'AWS::IAM::Role'
     DeletionPolicy : Delete 
     Properties:
-      RoleName: eks-cluster-iamrole 
+      RoleName:
+          !Join [ "-", [ 'cluster-iam-role', !Ref enviroment ] ]
+         
       AssumeRolePolicyDocument:
         Version: 2012-10-17
         Statement:
@@ -24,7 +35,8 @@ Resources:
     Type: 'AWS::IAM::Role'
     DeletionPolicy : Delete 
     Properties:
-      RoleName: eks-node-group-iamrole
+      RoleName: 
+        !Join [ "-", [ 'nodegroup-iam-role', !Ref enviroment ] ]
       AssumeRolePolicyDocument:
         Version: 2012-10-17
         Statement:
@@ -44,7 +56,9 @@ Resources:
     Type: AWS::IAM::InstanceProfile
     DeletionPolicy : Delete 
     Properties: 
-      InstanceProfileName: "eks-node-group-instance-profile"
+      InstanceProfileName: 
+          !Join [ "-", [ 'eks-node-group-instance-profile', !Ref enviroment ] ]
+        
       Roles: 
         - !Ref eksnodegroupiamrole
 
@@ -52,7 +66,8 @@ Resources:
     Type: 'AWS::IAM::Policy'
     DeletionPolicy : Delete 
     Properties:
-      PolicyName: ALBIngressControllerIAMPolicy
+      PolicyName: 
+        !Join [ "-", [ 'ALBIngressControllerIAMPolicy', !Ref enviroment ] ]
       PolicyDocument:
         Version: 2012-10-17
         Statement:

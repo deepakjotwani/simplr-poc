@@ -3,25 +3,22 @@ aws s3 cp s3://simplrinfrabucket/vpc/cf_template_master.yaml .
 aws s3 cp s3://simplrinfrabucket/vpc/parameters.json  .
 
 
-aws cloudformation create-stack --stack-name rolesinfra --region us-east-2 --template-body file://infra/roles.yaml --capabilities  CAPABILITY_IAM  CAPABILITY_NAMED_IAM  CAPABILITY_AUTO_EXPAND
-
- aws cloudformation wait stack-create-complete --region us-east-2 --stack-name rolesinfra
-
-aws cloudformation create-stack --stack-name nlbinfra --region us-east-2 --template-body file://infra/nlb-infra.yaml --capabilities  CAPABILITY_IAM  CAPABILITY_NAMED_IAM  CAPABILITY_AUTO_EXPAND
-
- aws cloudformation wait stack-create-complete --region us-east-2 --stack-name nlbinfra 
-
-
-aws cloudformation create-stack --stack-name --region us-east-2 simpplrnwstack --template-body file://cf_template_master.yaml --parameters file://parameters.json --capabilities  CAPABILITY_IAM  CAPABILITY_NAMED_IAM  CAPABILITY_AUTO_EXPAND
+aws cloudformation create-stack --stack-name simpplrnwstack --region us-east-2  --template-body file://cf_template_master.yaml --parameters file://parameters.json --capabilities  CAPABILITY_IAM  CAPABILITY_NAMED_IAM  CAPABILITY_AUTO_EXPAND
 
 aws cloudformation wait stack-create-complete --region us-east-2 --stack-name simpplrnwstack 
 
-aws cloudformation --region us-east-2 list-exports
+aws cloudformation create-stack --stack-name rolesinfra --region us-east-2 --template-body file://infra/roles.yaml --parameters file://infra/parameters.json --capabilities  CAPABILITY_IAM  CAPABILITY_NAMED_IAM  CAPABILITY_AUTO_EXPAND
 
-sleep 10
+aws cloudformation wait stack-create-complete --region us-east-2 --stack-name rolesinfra
+
+
+# aws cloudformation create-stack --stack-name nlbinfra --region us-east-2 --template-body file://infra/nlb-infra.yaml --parameters file://infra/parameters.json --capabilities CAPABILITY_IAM  CAPABILITY_NAMED_IAM  CAPABILITY_AUTO_EXPAND
+
+#  aws cloudformation wait stack-create-complete --region us-east-2 --stack-name nlbinfra 
+
 ./variables.sh
 
-eksctl create cluster -f cluster.yaml
+# eksctl create cluster -f cluster.yaml
 
 #  kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/v1.1.4/docs/examples/rbac-role.yaml #RBAC Role for alb ingress
 

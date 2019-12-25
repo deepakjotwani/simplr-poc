@@ -1,0 +1,17 @@
+{
+    "Exports": [
+        {
+            "Value": "dev",
+            "Name": "enviroment"
+        },
+        {
+            "Value": "t2.micro",
+            "Name": "instancetype"
+        },
+        {
+            "Value": "3",
+            "Name": "desiredcapacity"
+        }                
+     
+    ]
+}
