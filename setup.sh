@@ -3,13 +3,13 @@ aws s3 cp s3://simplrinfrabucket/vpc/cf_template_master.yaml .
 aws s3 cp s3://simplrinfrabucket/vpc/parameters.json  .
 
 
-aws cloudformation create-stack --stack-name simpplrnwstack --region us-east-2  --template-body file://cf_template_master.yaml --parameters file://parameters.json --capabilities  CAPABILITY_IAM  CAPABILITY_NAMED_IAM  CAPABILITY_AUTO_EXPAND
+aws cloudformation create-stack --stack-name $2 --region $1  --template-body file://cf_template_master.yaml --parameters file://parameters.json --capabilities  CAPABILITY_IAM  CAPABILITY_NAMED_IAM  CAPABILITY_AUTO_EXPAND
 
-aws cloudformation wait stack-create-complete --region us-east-2 --stack-name simpplrnwstack 
+aws cloudformation wait stack-create-complete --region $1 --stack-name $2 
 
-aws cloudformation create-stack --stack-name rolesinfra --region us-east-2 --template-body file://infra/roles.yaml --parameters file://infra/parameters.json --capabilities  CAPABILITY_IAM  CAPABILITY_NAMED_IAM  CAPABILITY_AUTO_EXPAND
+aws cloudformation create-stack --stack-name $3 --region $1 --template-body file://infra/roles.yaml --parameters file://infra/parameters.json --capabilities  CAPABILITY_IAM  CAPABILITY_NAMED_IAM  CAPABILITY_AUTO_EXPAND
 
-aws cloudformation wait stack-create-complete --region us-east-2 --stack-name rolesinfra
+aws cloudformation wait stack-create-complete --region $1 --stack-name $3
 
 
 # aws cloudformation create-stack --stack-name nlbinfra --region us-east-2 --template-body file://infra/nlb-infra.yaml --parameters file://infra/parameters.json --capabilities CAPABILITY_IAM  CAPABILITY_NAMED_IAM  CAPABILITY_AUTO_EXPAND
