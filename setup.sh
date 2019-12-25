@@ -12,7 +12,7 @@ aws cloudformation create-stack --stack-name nlbinfra --region us-east-2 --templ
  aws cloudformation wait stack-create-complete --region us-east-2 --stack-name nlbinfra 
 
 
-aws cloudformation create-stack --stack-name simpplrnwstack --template-body file://cf_template_master.yaml --parameters file://parameters.json --capabilities  CAPABILITY_IAM  CAPABILITY_NAMED_IAM  CAPABILITY_AUTO_EXPAND
+aws cloudformation create-stack --stack-name --region us-east-2 simpplrnwstack --template-body file://cf_template_master.yaml --parameters file://parameters.json --capabilities  CAPABILITY_IAM  CAPABILITY_NAMED_IAM  CAPABILITY_AUTO_EXPAND
 
 aws cloudformation wait stack-create-complete --region us-east-2 --stack-name simpplrnwstack 
 
