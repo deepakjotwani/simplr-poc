@@ -1,13 +1,13 @@
 #!/bin/sh 
-export CLUSTER_ROLE_ARN="$(aws cloudformation --region us-east-2 list-exports  | jq '.Exports[] | select(.Name == "'$2'-ClusterRoleARN") | .Value' | tr -d \'\")" 
+export CLUSTER_ROLE_ARN="$(aws cloudformation --region us-east-2 list-exports  | jq '.Exports[] | select(.Name == "ROLE_STACK-ClusterRoleARN") | .Value' | tr -d \'\")" 
 sed -i "s|CLUSTER_ROLE_ARN|${CLUSTER_ROLE_ARN}|" cluster.yaml
-export NODEGROUP_ROLE_ARN="$(aws cloudformation --region us-east-2 list-exports  | jq '.Exports[] | select(.Name == "'$2'-NodeGroupRoleARN") | .Value' | tr -d \'\")" 
+export NODEGROUP_ROLE_ARN="$(aws cloudformation --region us-east-2 list-exports  | jq '.Exports[] | select(.Name == "'ROLE_STACK'-NodeGroupRoleARN") | .Value' | tr -d \'\")" 
 sed -i "s|NODEGROUP_ROLE_ARN|${NODEGROUP_ROLE_ARN}|" cluster.yaml
-export INSTANCE_PROFILE_ARN="$(aws cloudformation --region us-east-2 list-exports  | jq '.Exports[] | select(.Name == "'$2'-NodeGroupInstanceProfileARN") | .Value' | tr -d \'\")" 
+export INSTANCE_PROFILE_ARN="$(aws cloudformation --region us-east-2 list-exports  | jq '.Exports[] | select(.Name == "'ROLE_STACK'-NodeGroupInstanceProfileARN") | .Value' | tr -d \'\")" 
 sed -i "s|INSTANCE_PROFILE_ARN|${INSTANCE_PROFILE_ARN}|" cluster.yaml
 
 
-export VPC_ID="$(aws cloudformation --region us-east-2 list-exports  | jq '.Exports[] | select(.Name == "'$1':vpc:id") | .Value'  | tr -d \'\")"
+export VPC_ID="$(aws cloudformation --region us-east-2 list-exports  | jq '.Exports[] | select(.Name == "'NETWORK_STACK':vpc:id") | .Value'  | tr -d \'\")"
 sed -i "s|VPC_ID|${VPC_ID}|" cluster.yaml
 
 export AZ1="$(aws cloudformation --region us-east-2 list-exports  | jq '.Exports[] | select(.Name == "'$VPC_ID':availability-zone-1:id") | .Value'  | tr -d \'\")"
