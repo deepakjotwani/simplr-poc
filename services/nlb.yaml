@@ -11,9 +11,12 @@ Parameters:
 
   vpcid:
     Type: String
+    Default: ''
     Description: VPC ID   
+
   networkstackname:
     Type: String
+    Default: ''    
     Description: VPC ID    
 
 Resources:

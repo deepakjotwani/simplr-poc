@@ -4,7 +4,7 @@
       "ParameterValue": "dev"
     } ,
     {
-      "ParameterKey": "networkstack",
+      "ParameterKey": "networkstackname",
       "ParameterValue": "NETWORK_STACK"
     } ,
     {
