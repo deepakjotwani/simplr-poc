@@ -22,9 +22,9 @@ sed -i "s|NETWORK_STACK|$2|" ./services/servicesparams.json
 
 ./variables.sh 
 
-aws cloudformation create-stack --stack-name nlbinfra --region us-east-1 --template-body file://services/nlb.yaml --parameters file://services/servicesparams.json --capabilities CAPABILITY_IAM  CAPABILITY_NAMED_IAM  CAPABILITY_AUTO_EXPAND
+aws cloudformation create-stack --stack-name $4 --region $1 --template-body file://services/nlb.yaml --parameters file://services/servicesparams.json --capabilities CAPABILITY_IAM  CAPABILITY_NAMED_IAM  CAPABILITY_AUTO_EXPAND
 
-#  aws cloudformation wait stack-create-complete --region us-east-2 --stack-name nlbinfra 
+ aws cloudformation wait stack-create-complete --region $1 --stack-name $4 
 
 # eksctl create cluster -f cluster.yaml
 
