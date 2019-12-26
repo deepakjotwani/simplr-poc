@@ -7,7 +7,7 @@ aws cloudformation create-stack --stack-name $2 --region $1  --template-body fil
 
 aws cloudformation wait stack-create-complete --region $1 --stack-name $2 
 
-aws cloudformation create-stack --stack-name $3 --region $1 --template-body file://infra/roles.yaml --parameters file://infra/parameters.json --capabilities  CAPABILITY_IAM  CAPABILITY_NAMED_IAM  CAPABILITY_AUTO_EXPAND
+aws cloudformation create-stack --stack-name $3 --region $1 --template-body file://services/roles.yaml --parameters file://services/parameters.json --capabilities  CAPABILITY_IAM  CAPABILITY_NAMED_IAM  CAPABILITY_AUTO_EXPAND
 
 aws cloudformation wait stack-create-complete --region $1 --stack-name $3
 
