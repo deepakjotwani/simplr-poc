@@ -1,0 +1,20 @@
+Name:         aws-auth
+Namespace:    kube-system
+Labels:       <none>
+Annotations:  <none>
+
+Data
+====
+mapRoles:
+----
+- groups:
+  - system:bootstrappers
+  - system:nodes
+  rolearn: arn:aws:iam::838660873199:role/eksctl-simplr-demo-cluster-nodegr-NodeInstanceRole-9Y6AV9IOWD4B
+  username: system:node:{{EC2PrivateDNSName}}
+
+mapUsers:
+----
+[]
+
+Events:  <none>

@@ -1,1 +1,0 @@
-eksctl delete cluster -f cluster.yaml
