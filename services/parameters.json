@@ -2,5 +2,13 @@
     {
       "ParameterKey": "enviroment",
       "ParameterValue": "dev"
+    },
+    {
+      "ParameterKey": "networkstackname",
+      "ParameterValue": "NETWORK_STACK_NAME"
+    },
+    {
+      "ParameterKey": "rolestackname",
+      "ParameterValue": "ROLE_STACK_NAME"
     }
   ]

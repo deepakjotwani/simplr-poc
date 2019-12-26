@@ -1,7 +1,18 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: 'Creates and infra for Netwrok Load Balancer'
-Resources:
 
+Parameters:
+  enviroment:
+    Type: String
+    AllowedValues: 
+      - dev
+      - qa
+    Description: ENV for roles(dev or qa)   
+  networkstackname:
+    Type: String
+    Description: Stack name where vpc and subnets have been created
+
+Resources:
   SimplrNetworkLoadBalancer:
     Type: 'AWS::ElasticLoadBalancingV2::LoadBalancer'
     DeletionPolicy: Delete
@@ -42,7 +53,7 @@ Resources:
     Type: 'AWS::S3::Bucket'
     DeletionPolicy: Delete
     Properties:
-      BucketName: "simplr-infra-bucket"
+      BucketName: "simplr-nlb-bucket"
       
   BucketPolicyPublic:
     Type: 'AWS::S3::BucketPolicy'
