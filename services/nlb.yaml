@@ -8,18 +8,22 @@ Parameters:
       - dev
       - qa
     Description: ENV for roles(dev or qa)   
+
 Resources:
-  SimplrNetworkLoadBalancer:
+  smtipNetworkLoadBalancer:
     Type: 'AWS::ElasticLoadBalancingV2::LoadBalancer'
     DeletionPolicy: Delete
     Properties:
       Name:
-        !Join [ "-", [ 'simpplr-nlb', !Ref enviroment ] ]
+        !Join [ "-", [ 'smtip-nlb', !Ref enviroment ] ]
       Scheme: "internet-facing"
       Type: network
-      Subnets: ["subnet-06e2e100ebfa9a574","subnet-0bbeda2c05f614427","subnet-0d291755f72dd5b83"]
-
-  SimplrNLBTargetGroup: 
+      Subnets: 
+        Fn::Split:
+          - ","
+          - Fn::ImportValue: 
+              "vpc-09797e7060d17dc05:data-subnet:ids"
+  smtipNLBTargetGroup: 
     Type: 'AWS::ElasticLoadBalancingV2::TargetGroup'
     DeletionPolicy: Delete
     Properties:
@@ -30,56 +34,57 @@ Resources:
       HealthyThresholdCount: 3
       UnhealthyThresholdCount: 3
       Name:
-        !Join [ "-", [ ' simpplr-nlb-tg', !Ref enviroment ] ]
+        !Join [ "-", [ 'smtip-nlb-tg', !Ref enviroment ] ]
       Port: 80
       Protocol: TCP
-      VpcId: vpc-08c54b71caa4efdc9
+      VpcId:
+        Fn::ImportValue: "smtipnetwrokstackdev:vpc:id"   
       TargetType: "ip"   
 
-  SimplrNLBListener:
+  smtipNLBListener:
     Type: 'AWS::ElasticLoadBalancingV2::Listener'
     DeletionPolicy: Delete
     Properties:
       DefaultActions:
-      - TargetGroupArn: !Ref SimplrNLBTargetGroup
+      - TargetGroupArn: !Ref smtipNLBTargetGroup
         Type: forward
-      LoadBalancerArn: !Ref SimplrNetworkLoadBalancer
+      LoadBalancerArn: !Ref smtipNetworkLoadBalancer
       Port: 80
       Protocol: TCP
   
-  SimplrNLBS3: # cannot be deleted with data
+  smtipNLBS3: # cannot be deleted with data
     Type: 'AWS::S3::Bucket'
     DeletionPolicy: Delete
     Properties:
       BucketName:
-          !Join [ "-", [ ' simpplr-nlb-s3-bucket', !Ref enviroment ] ]      
+          !Join [ "-", [ ' smtipnlb-s3-bucket', !Ref enviroment ] ]      
       
   BucketPolicyPublic:
     Type: 'AWS::S3::BucketPolicy'
     Properties:
-      Bucket: !Ref SimplrNLBS3
+      Bucket: !Ref smtipNLBS3
       PolicyDocument:
         Version: '2012-10-17'
         Statement:
         - Principal: '*'
           Action: 's3:GetObject'
           Effect: Allow
-          Resource: !Sub '${SimplrNLBS3.Arn}/*'
+          Resource: !Sub '${smtipNLBS3.Arn}/*'
 
 Outputs:
-    SimplrNlbARN:
+    smtipNlbARN:
       Description: The ARN for the Network Load Balancer
-      Value: !Ref SimplrNetworkLoadBalancer
+      Value: !Ref smtipNetworkLoadBalancer
       Export:
-        Name: !Sub "${AWS::StackName}-SimplrNlbARN"
-    SimplrNlbTgARN:
+        Name: !Sub "${AWS::StackName}-smtipNlbARN"
+    smtipNlbTgARN:
       Description: The ARN of the Target group of Network Load Balancer
-      Value: !Ref SimplrNLBTargetGroup
+      Value: !Ref smtipNLBTargetGroup
       Export:
-        Name: !Sub "${AWS::StackName}-SimplrNlbTgARN"
+        Name: !Sub "${AWS::StackName}-smtipNlbTgARN"
     S3BucketName:
       Description: The Name of the S3 Bucket
-      Value: !Ref SimplrNLBS3
+      Value: !Ref smtipNLBS3
       Export:
-        Name: !Sub "${AWS::StackName}-S3BucketName"
+        Name: !Sub "${AWS::StackName}-S3NlbBucketName"
     

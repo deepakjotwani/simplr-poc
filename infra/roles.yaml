@@ -15,7 +15,7 @@ Resources:
     DeletionPolicy : Delete 
     Properties:
       RoleName:
-          !Join [ "-", [ 'cluster-iam-role', !Ref enviroment ] ]
+          !Join [ "-", [ 'smtip','cluster-iam-role', !Ref enviroment ] ]
          
       AssumeRolePolicyDocument:
         Version: 2012-10-17
@@ -36,7 +36,7 @@ Resources:
     DeletionPolicy : Delete 
     Properties:
       RoleName: 
-        !Join [ "-", [ 'nodegroup-iam-role', !Ref enviroment ] ]
+        !Join [ "-", [  'smtip','nodegroup-iam-role', !Ref enviroment ] ]
       AssumeRolePolicyDocument:
         Version: 2012-10-17
         Statement:
@@ -57,7 +57,7 @@ Resources:
     DeletionPolicy : Delete 
     Properties: 
       InstanceProfileName: 
-          !Join [ "-", [ 'eks-node-group-instance-profile', !Ref enviroment ] ]
+          !Join [ "-", [ 'smtip', 'eks-node-group-instance-profile', !Ref enviroment ] ]
         
       Roles: 
         - !Ref eksnodegroupiamrole
@@ -67,7 +67,7 @@ Resources:
     DeletionPolicy : Delete 
     Properties:
       PolicyName: 
-        !Join [ "-", [ 'ALBIngressControllerIAMPolicy', !Ref enviroment ] ]
+        !Join [ "-", [  'smtip','ALBIngressControllerIAMPolicy', !Ref enviroment ] ]
       PolicyDocument:
         Version: 2012-10-17
         Statement:

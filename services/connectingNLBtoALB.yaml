@@ -126,9 +126,9 @@ Resources:
           ALB_DNS_NAME:
             Ref: InternalALBDNSName
           NLB_TG_ARN: 
-            Fn::ImportValue: !Sub "${nlbinfra}-SimplrNlbTgARN"            
+            Fn::ImportValue: !Sub "${nlbinfra}-smtipNlbTgARN"            
           S3_BUCKET: 
-            Fn::ImportValue: !Sub "${nlbinfra}-S3BucketName"
+            Fn::ImportValue: !Sub "${nlbinfra}-S3NlbBucketName"
           MAX_LOOKUP_PER_INVOCATION:
             Ref: MAXDNSLookupPerInvocation
           INVOCATIONS_BEFORE_DEREGISTRATION:

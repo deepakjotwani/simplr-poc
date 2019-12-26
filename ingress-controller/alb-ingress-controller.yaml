@@ -19,7 +19,7 @@ spec:
         - name: alb-ingress-controller
           args:            
             - --ingress-class=alb         
-            - --cluster-name=simplr-demo-cluster
+            - --cluster-name= smtip-demo-cluster
             - --aws-vpc-id=vpc-08c54b71caa4efdc9
             - --aws-region=us-east-2          
           image: docker.io/amazon/aws-alb-ingress-controller:v1.1.4
