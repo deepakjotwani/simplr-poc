@@ -9,6 +9,8 @@ sed -i "s|INSTANCE_PROFILE_ARN|${INSTANCE_PROFILE_ARN}|" cluster.yaml
 
 export VPC_ID="$(aws cloudformation --region REGION1 list-exports  | jq '.Exports[] | select(.Name == "NETWORK_STACK:vpc:id") | .Value'  | tr -d \'\")"
 sed -i "s|VPC_ID|${VPC_ID}|" cluster.yaml
+sed -i "s|VPC_ID|${VPC_ID}|" ./services/servicesparams.json
+
 
 export AZ1="$(aws cloudformation --region REGION1 list-exports  | jq '.Exports[] | select(.Name == "'$VPC_ID':availability-zone-1:id") | .Value'  | tr -d \'\")"
 sed -i "s|AZ1|${AZ1}|" cluster.yaml

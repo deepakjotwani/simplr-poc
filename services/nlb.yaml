@@ -7,7 +7,14 @@ Parameters:
     AllowedValues: 
       - dev
       - qa
-    Description: ENV for roles(dev or qa)   
+    Description: ENV for roles(devs or qa)
+
+  vpcid:
+    Type: String
+    Description: VPC ID   
+  networkstackname:
+    Type: String
+    Description: VPC ID    
 
 Resources:
   smtipNetworkLoadBalancer:
@@ -22,7 +29,7 @@ Resources:
         Fn::Split:
           - ","
           - Fn::ImportValue: 
-              "vpc-09797e7060d17dc05:data-subnet:ids"
+              !Sub "${vpcid}:data-subnet:ids" 
   smtipNLBTargetGroup: 
     Type: 'AWS::ElasticLoadBalancingV2::TargetGroup'
     DeletionPolicy: Delete
@@ -38,7 +45,8 @@ Resources:
       Port: 80
       Protocol: TCP
       VpcId:
-        Fn::ImportValue: "smtipnetwrokstackdev:vpc:id"   
+        Fn::ImportValue:  
+            !Sub "${networkstackname}:vpc:id"  
       TargetType: "ip"   
 
   smtipNLBListener:

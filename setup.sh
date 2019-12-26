@@ -17,6 +17,10 @@ sed -i "s|REGION1|$1|" variables.sh
 sed -i "s|REGION1|$1|" cluster.yaml
 sed -i "s|ROLE_STACK|$3|" variables.sh
 sed -i "s|NETWORK_STACK|$2|" variables.sh
+sed -i "s|NETWORK_STACK|$2|" ./services/servicesparams.json
+
+
+
 
 
 # aws cloudformation create-stack --stack-name nlbinfra --region us-east-2 --template-body file://infra/nlb-infra.yaml --parameters file://infra/parameters.json --capabilities CAPABILITY_IAM  CAPABILITY_NAMED_IAM  CAPABILITY_AUTO_EXPAND

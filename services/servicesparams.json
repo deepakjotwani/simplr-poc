@@ -2,5 +2,16 @@
     {
       "ParameterKey": "enviroment",
       "ParameterValue": "dev"
-    }    
+    } ,
+    {
+      "ParameterKey": "networkstack",
+      "ParameterValue": "NETWORK_STACK"
+    } ,
+    {
+      "ParameterKey": "vpcid",
+      "ParameterValue": "VPC_ID"
+    }  
+
+    
+    
   ]
