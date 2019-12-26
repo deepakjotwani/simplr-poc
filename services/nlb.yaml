@@ -8,16 +8,13 @@ Parameters:
       - dev
       - qa
     Description: ENV for roles(dev or qa)   
-  networkstackname:
-    Type: String
-    Description: Stack name where vpc and subnets have been created
-
 Resources:
   SimplrNetworkLoadBalancer:
     Type: 'AWS::ElasticLoadBalancingV2::LoadBalancer'
     DeletionPolicy: Delete
     Properties:
-      Name: "simplr-nlb"
+      Name:
+        !Join [ "-", [ 'simpplr-nlb', !Ref enviroment ] ]
       Scheme: "internet-facing"
       Type: network
       Subnets: ["subnet-06e2e100ebfa9a574","subnet-0bbeda2c05f614427","subnet-0d291755f72dd5b83"]
@@ -32,7 +29,8 @@ Resources:
       HealthCheckProtocol: TCP
       HealthyThresholdCount: 3
       UnhealthyThresholdCount: 3
-      Name: simplr-nlb-tg
+      Name:
+        !Join [ "-", [ ' simpplr-nlb-tg', !Ref enviroment ] ]
       Port: 80
       Protocol: TCP
       VpcId: vpc-08c54b71caa4efdc9
@@ -53,7 +51,8 @@ Resources:
     Type: 'AWS::S3::Bucket'
     DeletionPolicy: Delete
     Properties:
-      BucketName: "simplr-nlb-bucket"
+      BucketName:
+          !Join [ "-", [ ' simpplr-nlb-s3-bucket', !Ref enviroment ] ]      
       
   BucketPolicyPublic:
     Type: 'AWS::S3::BucketPolicy'
