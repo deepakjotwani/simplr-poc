@@ -68,7 +68,7 @@ Resources:
     DeletionPolicy: Delete
     Properties:
       BucketName:
-          !Join [ "-", [ ' smtipnlb-s3-bucket', !Ref enviroment ] ]      
+          !Join [ "-", [ 'smtipnlb-s3-bucket', !Ref enviroment ] ]      
       
   BucketPolicyPublic:
     Type: 'AWS::S3::BucketPolicy'
