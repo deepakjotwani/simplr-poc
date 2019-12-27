@@ -32,7 +32,7 @@ Resources:
         Fn::Split:
           - ","
           - Fn::ImportValue: 
-              !Sub "${vpcid}:data-subnet:ids" 
+              !Sub "${vpcid}:ingress-subnet:ids" 
   smtipNLBTargetGroup: 
     Type: 'AWS::ElasticLoadBalancingV2::TargetGroup'
     DeletionPolicy: Delete
