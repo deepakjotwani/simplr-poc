@@ -97,5 +97,4 @@ Outputs:
       Description: The Name of the S3 Bucket
       Value: !Ref smtipNLBS3
       Export:
-        Name: !Sub "${AWS::StackName}-S3NlbBucketName"
-    
+        Name: !Sub "${AWS::StackName}-S3NlbBucketName"    
