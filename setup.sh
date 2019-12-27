@@ -1,3 +1,5 @@
+#!/bin/bash
+
 aws s3 cp s3://smtip-artifact-bucket/eks/cluster.yaml .
 aws s3 cp s3://smtip-artifact-bucket/vpc/cf_template_master.yaml .
 aws s3 cp s3://smtip-artifact-bucket/vpc/parameters.json  .

@@ -1,4 +1,4 @@
-#!/bin/sh 
+#!/bin/bash
 export CLUSTER_ROLE_ARN="$(aws cloudformation --region REGION1 list-exports  | jq '.Exports[] | select(.Name == "ROLE_STACK-ClusterRoleARN") | .Value' | tr -d \'\")" 
 sed -i "s|CLUSTER_ROLE_ARN|${CLUSTER_ROLE_ARN}|" cluster.yaml
 export NODEGROUP_ROLE_ARN="$(aws cloudformation --region REGION1 list-exports  | jq '.Exports[] | select(.Name == "ROLE_STACK-NodeGroupRoleARN") | .Value' | tr -d \'\")" 
