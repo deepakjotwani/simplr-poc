@@ -10,6 +10,7 @@ sed -i "s|INSTANCE_PROFILE_ARN|${INSTANCE_PROFILE_ARN}|" cluster.yaml
 export VPC_ID="$(aws cloudformation --region REGION1 list-exports  | jq '.Exports[] | select(.Name == "NETWORK_STACK:vpc:id") | .Value'  | tr -d \'\")"
 sed -i "s|VPC_ID|${VPC_ID}|" cluster.yaml
 sed -i "s|VPC_ID|${VPC_ID}|" ./services/servicesparams.json
+sed -i "s|VPC_ID|${VPC_ID}|" ./ingress-controller/alb-ingress-controller.yaml
 
 
 export AZ1="$(aws cloudformation --region REGION1 list-exports  | jq '.Exports[] | select(.Name == "'$VPC_ID':availability-zone-1:id") | .Value'  | tr -d \'\")"
@@ -32,7 +33,8 @@ export SUBNET3="$(echo $PRIVATE_SUBNET_IDS |  cut -d',' -f3)"
 sed -i "s|SUBNET3|${SUBNET3}|" cluster.yaml
 
 export ENV="$(cat clustervalues.json  | jq '.Exports[] | select(.Name == "enviroment") | .Value'  | tr -d \'\")"
-sed -i "s|ENV|${ENV}|" cluster.yaml
+sed -i "s|ENV|${ENV}|" cluster.yaml 
+sed -i "s|ENV|${ENV}|" ./ingress-controller/alb-ingress-controller.yaml
 
 export MIN_SIZE="$(cat clustervalues.json  | jq '.Exports[] | select(.Name == "minimumsize") | .Value'  | tr -d \'\")"
 sed -i "s|MIN_SIZE|${MIN_SIZE}|" cluster.yaml
