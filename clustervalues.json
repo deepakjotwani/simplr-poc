@@ -9,11 +9,15 @@
             "Name": "instancetype"
         },
         {
-            "Value": "1",
+            "Value": "2",
             "Name": "minimumsize"
         }, 
         {
-            "Value": "5",
+            "Value": "2",
+            "Name": "desiredcapacity"
+        },         
+        {
+            "Value": "2",
             "Name": "maximumsize"
         }                       
      

@@ -42,6 +42,9 @@ sed -i "s|MIN_SIZE|${MIN_SIZE}|" cluster.yaml
 export MAX_SIZE="$(cat clustervalues.json  | jq '.Exports[] | select(.Name == "maximumsize") | .Value'  | tr -d \'\")"
 sed -i "s|MAX_SIZE|${MAX_SIZE}|" cluster.yaml
 
+export DESIRED_CAPACITY="$(cat clustervalues.json  | jq '.Exports[] | select(.Name == "desiredcapacity") | .Value'  | tr -d \'\")"
+sed -i "s|DESIRED_CAPACITY|${DESIRED_CAPACITY}|" cluster.yaml
+
 
 export INSTANCE_TYPE="$(cat clustervalues.json  | jq '.Exports[] | select(.Name == "instancetype") | .Value'  | tr -d \'\")"
 sed -i "s|INSTANCE_TYPE|${INSTANCE_TYPE}|" cluster.yaml
