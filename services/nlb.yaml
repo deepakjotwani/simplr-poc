@@ -17,8 +17,15 @@ Parameters:
   networkstackname:
     Type: String
     Default: ''    
-    Description: VPC ID    
-
+    Description: Stack consisting of VPC, Subnet etc
+  rolestackname:
+    Type: String
+    Default: ''    
+    Description: Stack consisting of Roles    
+  nlbstackname:
+    Type: String
+    Default: ''    
+    Description: Stack consisting of NLB resources           
 Resources:
   smtipNetworkLoadBalancer:
     Type: 'AWS::ElasticLoadBalancingV2::LoadBalancer'
