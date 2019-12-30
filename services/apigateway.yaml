@@ -1,0 +1,57 @@
+Parameters:
+  type:
+    Type: String
+    Description: Type for Rest API
+
+  enviroment:
+    Type: String
+    AllowedValues: 
+      - dev 
+      - qa
+    Description: ENV for roles(devs or qa)
+
+  vpcid:
+    Type: String
+    Default: ''
+    Description: VPC ID      
+
+  networkstackname:
+    Type: String
+    Default: ''    
+    Description: Network Stack Name 
+
+  nlbstackname:
+    Type: String
+    Default: ''    
+    Description: NLB Stack Name        
+
+Resources:
+  VpcLink:
+      Type: AWS::ApiGateway::VpcLink
+      Properties:
+          Description:  !Join [ "-", [ 'VPC link for', !Ref enviroment ] ]
+          Name: !Join [ "-", [ 'smtip-vpclink', !Ref enviroment ] ]
+          TargetArns:
+            Fn::ImportValue:  
+              !Sub "${nlbstackname}-smtipNlbARN" 
+               
+  RestApi:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      EndpointConfiguration:
+        Types:
+          - !Ref type
+      Name: !Join [ "-", [ 'smtip-apigateway', !Ref enviroment ] ]
+
+  MockMethod:
+    Type: 'AWS::ApiGateway::Method'
+    Properties:
+      RestApiId: !Ref MyRestApi
+      ResourceId: !GetAtt 
+        - MyRestApi
+        - RootResourceId 
+      HttpMethod: GET
+      AuthorizationType: NONE
+      Integration:
+        Type: VPC_LINK
+    DependsOn: VpcLink        

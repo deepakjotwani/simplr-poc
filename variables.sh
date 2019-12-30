@@ -34,8 +34,12 @@ sed -i "s|SUBNET3|${SUBNET3}|" cluster.yaml
 export ENV="$(cat clustervalues.json  | jq '.Exports[] | select(.Name == "enviroment") | .Value'  | tr -d \'\")"
 sed -i "s|ENV|${ENV}|" cluster.yaml
 
-export DESIRED_CAPACITY="$(cat clustervalues.json  | jq '.Exports[] | select(.Name == "desiredcapacity") | .Value'  | tr -d \'\")"
-sed -i "s|DESIRED_CAPACITY|${DESIRED_CAPACITY}|" cluster.yaml
+export MIN_SIZE="$(cat clustervalues.json  | jq '.Exports[] | select(.Name == "minimumsize") | .Value'  | tr -d \'\")"
+sed -i "s|MIN_SIZE|${MIN_SIZE}|" cluster.yaml
+
+export MAX_SIZE="$(cat clustervalues.json  | jq '.Exports[] | select(.Name == "maximumsize") | .Value'  | tr -d \'\")"
+sed -i "s|MAX_SIZE|${MAX_SIZE}|" cluster.yaml
+
 
 export INSTANCE_TYPE="$(cat clustervalues.json  | jq '.Exports[] | select(.Name == "instancetype") | .Value'  | tr -d \'\")"
 sed -i "s|INSTANCE_TYPE|${INSTANCE_TYPE}|" cluster.yaml

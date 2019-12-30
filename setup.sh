@@ -18,8 +18,11 @@ sleep 10
 sed -i "s|REGION1|$1|" variables.sh
 sed -i "s|REGION1|$1|" cluster.yaml
 sed -i "s|ROLE_STACK|$3|" variables.sh
+sed -i "s|ROLE_STACK|$3|" ./services/servicesparams.json
 sed -i "s|NETWORK_STACK|$2|" variables.sh
 sed -i "s|NETWORK_STACK|$2|" ./services/servicesparams.json
+sed -i "s|NLB_STACK|$4|" ./services/servicesparams.json
+
 
 
 ./variables.sh 

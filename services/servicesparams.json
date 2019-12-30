@@ -8,10 +8,16 @@
       "ParameterValue": "NETWORK_STACK"
     } ,
     {
+      "ParameterKey": "rolestackname",
+      "ParameterValue": "ROLE_STACK"
+    } ,
+    {
+      "ParameterKey": "nlbstackname",
+      "ParameterValue": "NLB_STACK"
+    } ,
+    {
       "ParameterKey": "vpcid",
       "ParameterValue": "VPC_ID"
-    }  
-
-    
+    }      
     
   ]
