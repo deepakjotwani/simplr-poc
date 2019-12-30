@@ -1,8 +1,8 @@
 #!/bin/bash
 
-aws s3 cp s3://smtip-artifact-bucket/eks/cluster.yaml .
-aws s3 cp s3://smtip-artifact-bucket/vpc/cf_template_master.yaml .
-aws s3 cp s3://smtip-artifact-bucket/vpc/parameters.json  .
+aws s3 cp s3://smtip-artifact-preprod/eks/cluster.yaml .
+aws s3 cp s3://smtip-artifact-preprod/vpc/cf_template_master.yaml .
+aws s3 cp s3://smtip-artifact-preprod/vpc/parameters.json  .
 
 
 aws cloudformation create-stack --stack-name $2 --region $1  --template-body file://cf_template_master.yaml --parameters file://parameters.json --capabilities  CAPABILITY_IAM  CAPABILITY_NAMED_IAM  CAPABILITY_AUTO_EXPAND
