@@ -25,8 +25,6 @@ sed -i "s|NETWORK_STACK|$2|" variables.sh
 sed -i "s|NETWORK_STACK|$2|" ./services/servicesparams.json
 sed -i "s|NLB_STACK|$4|" ./services/servicesparams.json
 
-
-
 ./variables.sh 
 
 aws cloudformation create-stack --stack-name $4 --region $1 --template-body file://services/nlb.yaml --parameters file://services/servicesparams.json --capabilities CAPABILITY_IAM  CAPABILITY_NAMED_IAM  CAPABILITY_AUTO_EXPAND
