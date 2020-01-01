@@ -76,18 +76,6 @@ Resources:
     Properties:
       BucketName:
           !Join [ "-", [ 'smtipnlb-s3-bucket', !Ref enviroment ] ]      
-      
-  BucketPolicyPublic:
-    Type: 'AWS::S3::BucketPolicy'
-    Properties:
-      Bucket: !Ref smtipNLBS3
-      PolicyDocument:
-        Version: '2012-10-17'
-        Statement:
-        - Principal: '*'
-          Action: 's3:GetObject'
-          Effect: Allow
-          Resource: !Sub '${smtipNLBS3.Arn}/*'
 
 Outputs:
     smtipNlbARN:
