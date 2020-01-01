@@ -32,7 +32,7 @@ Resources:
     Properties:
       Name:
         !Join [ "-", [ 'smtip-nlb', !Ref enviroment ] ]
-      Scheme: "internet-facing"
+      Scheme: "internal"
       Type: network
       Subnets: 
         Fn::Split:
