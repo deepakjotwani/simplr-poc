@@ -4,6 +4,28 @@ AWSTemplateFormatVersion: '2010-09-09'
 Description: Template of Register Application Load Balancer as IP target for Network
   Load Balancer
 Parameters:
+  enviroment:
+    Type: String
+    AllowedValues: 
+      - dev
+      - qa
+    Description: ENV for roles(devs or qa)
+  vpcid:
+    Type: String
+    Default: ''
+    Description: VPC ID   
+  networkstackname:
+    Type: String
+    Default: ''    
+    Description: Stack consisting of VPC, Subnet etc
+  rolestackname:
+    Type: String
+    Default: ''    
+    Description: Stack consisting of Roles    
+  nlbstackname:
+    Type: String
+    Default: ''    
+    Description: Stack consisting of NLB resources   
   InternalALBDNSName:
     Type: String
     Default: ''
@@ -126,9 +148,9 @@ Resources:
           ALB_DNS_NAME:
             Ref: InternalALBDNSName
           NLB_TG_ARN: 
-            Fn::ImportValue: !Sub "${nlbinfra}-smtipNlbTgARN"            
+            Fn::ImportValue: !Sub "${nlbstackname}-smtipNlbTgARN"            
           S3_BUCKET: 
-            Fn::ImportValue: !Sub "${nlbinfra}-S3NlbBucketName"
+            Fn::ImportValue: !Sub "${nlbstackname}-S3NlbBucketName"
           MAX_LOOKUP_PER_INVOCATION:
             Ref: MAXDNSLookupPerInvocation
           INVOCATIONS_BEFORE_DEREGISTRATION:
