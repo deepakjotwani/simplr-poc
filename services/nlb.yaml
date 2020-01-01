@@ -8,7 +8,6 @@ Parameters:
       - dev
       - qa
     Description: ENV for roles(devs or qa)
-
   vpcid:
     Type: String
     Default: ''
