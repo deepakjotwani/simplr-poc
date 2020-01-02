@@ -90,6 +90,11 @@ Outputs:
       Value: !Ref smtipNLBTargetGroup
       Export:
         Name: !Sub "${AWS::StackName}-smtipNlbTgARN"
+    smtipNlbDNS:
+      Description: The DNS of the Network Load Balancer
+      Value: !GetAtt smtipNetworkLoadBalancer.DNSName
+      Export:
+        Name: !Sub "${AWS::StackName}-smtipNlbDNS"
     S3BucketName:
       Description: The Name of the S3 Bucket
       Value: !Ref smtipNLBS3

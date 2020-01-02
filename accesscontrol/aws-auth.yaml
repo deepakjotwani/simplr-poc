@@ -5,5 +5,5 @@ metadata:
   namespace: kube-system
 data:
   mapUsers: |
-    - userarn: arn:aws:iam::838660873199:user/deepakdefault
-      username: deepakdefault
+    - userarn: arn:aws:iam::754178572197:user/smtip-cicd
+      username: smtip-cicd

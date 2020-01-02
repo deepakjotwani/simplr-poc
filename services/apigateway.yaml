@@ -32,7 +32,7 @@ Parameters:
     Description: NLB Stack Name
 
 Resources:
-  VpcLink:
+  SmtipVpcLink:
       Type: AWS::ApiGateway::VpcLink
       Properties:
           Description:  !Join [ "-", [ 'VPC link for', !Ref enviroment ] ]
@@ -59,11 +59,15 @@ Resources:
       ResourceId: !GetAtt
         - SmtipRestApi
         - RootResourceId
-      HttpMethod: GET
+      HttpMethod: ANY
       AuthorizationType: NONE
       Integration:
-        Type: VPC_LINK
-    DependsOn: VpcLink
+        Type: HTTP
+        ConnectionType: VPC_LINK
+        ConnectionId: !Ref SmtipVpcLink
+        IntegrationHttpMethod: ANY
+        Uri: !Sub 'http://Fn::ImportValue: !Sub "${nlbstackname}-smtipNlbARN"'
+    DependsOn: SmtipVpcLink
 
   SmtipApiDeployment:
       Type: 'AWS::ApiGateway::Deployment'
@@ -71,3 +75,4 @@ Resources:
         RestApiId: !Ref SmtipRestApi
         Description: Smtip Root Resource deployment
         StageName: dev
+      DependsOn: SmtipMethod

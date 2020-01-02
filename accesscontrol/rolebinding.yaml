@@ -3,9 +3,9 @@ metadata:
   name: deepak-default-role-binding
 subjects:
 - kind: User
-  name: deepakdefault
+  name: smtip-cicd
   apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: ClusterRole #this must be Role or ClusterRole
-  name: deepakdefault-role # this must match the name of the Role or ClusterRole you wish to bind to
+  name: smtip-cicd-role # this must match the name of the Role or ClusterRole you wish to bind to
   apiGroup: rbac.authorization.k8s.io
