@@ -24,7 +24,7 @@ Parameters:
   rolestackname:
     Type: String
     Default: ''
-    Description: Stack consisting of Roles    
+    Description: Stack consisting of Roles
 
   nlbstackname:
     Type: String
@@ -38,8 +38,7 @@ Resources:
           Description:  !Join [ "-", [ 'VPC link for', !Ref enviroment ] ]
           Name: !Join [ "-", [ 'smtip-vpclink', !Ref enviroment ] ]
           TargetArns:
-            Fn::ImportValue:
-              !Sub "${nlbstackname}-smtipNlbARN"
+            - Fn::ImportValue: !Sub "${nlbstackname}-smtipNlbARN"
 
   SmtipRestApi:
     Type: AWS::ApiGateway::RestApi
