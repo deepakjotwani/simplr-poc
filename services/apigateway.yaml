@@ -21,6 +21,11 @@ Parameters:
     Default: ''
     Description: Network Stack Name
 
+  rolestackname:
+    Type: String
+    Default: ''
+    Description: Stack consisting of Roles    
+
   nlbstackname:
     Type: String
     Default: ''
