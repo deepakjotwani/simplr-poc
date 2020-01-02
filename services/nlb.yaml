@@ -4,27 +4,30 @@ Description: 'Creates and infra for Netwrok Load Balancer'
 Parameters:
   enviroment:
     Type: String
-    AllowedValues: 
+    AllowedValues:
       - dev
       - qa
     Description: ENV for roles(devs or qa)
   vpcid:
     Type: String
     Default: ''
-    Description: VPC ID   
-
+    Description: VPC ID
+  apigatewaystackname:
+    Type: String
+    Default: ''
+    Description: Stack consisting of resources for API Gateway
   networkstackname:
     Type: String
-    Default: ''    
+    Default: ''
     Description: Stack consisting of VPC, Subnet etc
   rolestackname:
     Type: String
-    Default: ''    
-    Description: Stack consisting of Roles    
+    Default: ''
+    Description: Stack consisting of Roles
   nlbstackname:
     Type: String
-    Default: ''    
-    Description: Stack consisting of NLB resources           
+    Default: ''
+    Description: Stack consisting of NLB resources
 Resources:
   smtipNetworkLoadBalancer:
     Type: 'AWS::ElasticLoadBalancingV2::LoadBalancer'
@@ -34,12 +37,12 @@ Resources:
         !Join [ "-", [ 'smtip-nlb', !Ref enviroment ] ]
       Scheme: "internal"
       Type: network
-      Subnets: 
+      Subnets:
         Fn::Split:
           - ","
-          - Fn::ImportValue: 
-              !Sub "${vpcid}:ingress-subnet:ids" 
-  smtipNLBTargetGroup: 
+          - Fn::ImportValue:
+              !Sub "${vpcid}:ingress-subnet:ids"
+  smtipNLBTargetGroup:
     Type: 'AWS::ElasticLoadBalancingV2::TargetGroup'
     DeletionPolicy: Delete
     Properties:
@@ -54,9 +57,9 @@ Resources:
       Port: 80
       Protocol: TCP
       VpcId:
-        Fn::ImportValue:  
-            !Sub "${networkstackname}:vpc:id"  
-      TargetType: "ip"   
+        Fn::ImportValue:
+            !Sub "${networkstackname}:vpc:id"
+      TargetType: "ip"
 
   smtipNLBListener:
     Type: 'AWS::ElasticLoadBalancingV2::Listener'
@@ -68,13 +71,13 @@ Resources:
       LoadBalancerArn: !Ref smtipNetworkLoadBalancer
       Port: 80
       Protocol: TCP
-  
+
   smtipNLBS3: # cannot be deleted with data
     Type: 'AWS::S3::Bucket'
     DeletionPolicy: Delete
     Properties:
       BucketName:
-          !Join [ "-", [ 'smtipnlb-s3-bucket', !Ref enviroment ] ]      
+          !Join [ "-", [ 'smtipnlb-s3-bucket', !Ref enviroment ] ]
 
 Outputs:
     smtipNlbARN:
@@ -92,4 +95,3 @@ Outputs:
       Value: !Ref smtipNLBS3
       Export:
         Name: !Sub "${AWS::StackName}-S3NlbBucketName"
-    

@@ -16,8 +16,12 @@
       "ParameterValue": "NLB_STACK"
     } ,
     {
+      "ParameterKey": "apigatewaystackname",
+      "ParameterValue": "APIGATEWAY_STACK"
+    } ,
+    {
       "ParameterKey": "vpcid",
       "ParameterValue": "VPC_ID"
-    }      
-    
+    }
+
   ]

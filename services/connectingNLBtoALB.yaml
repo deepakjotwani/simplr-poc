@@ -6,26 +6,30 @@ Description: Template of Register Application Load Balancer as IP target for Net
 Parameters:
   enviroment:
     Type: String
-    AllowedValues: 
+    AllowedValues:
       - dev
       - qa
     Description: ENV for roles(devs or qa)
   vpcid:
     Type: String
     Default: ''
-    Description: VPC ID   
+    Description: VPC ID
+  apigatewaystackname:
+    Type: String
+    Default: ''
+    Description: Stack consisting of resources for API Gateway
   networkstackname:
     Type: String
-    Default: ''    
+    Default: ''
     Description: Stack consisting of VPC, Subnet etc
   rolestackname:
     Type: String
-    Default: ''    
-    Description: Stack consisting of Roles    
+    Default: ''
+    Description: Stack consisting of Roles
   nlbstackname:
     Type: String
-    Default: ''    
-    Description: Stack consisting of NLB resources   
+    Default: ''
+    Description: Stack consisting of NLB resources
   InternalALBDNSName:
     Type: String
     Default: ''
@@ -147,9 +151,9 @@ Resources:
         Variables:
           ALB_DNS_NAME:
             Ref: InternalALBDNSName
-          NLB_TG_ARN: 
-            Fn::ImportValue: !Sub "${nlbstackname}-smtipNlbTgARN"            
-          S3_BUCKET: 
+          NLB_TG_ARN:
+            Fn::ImportValue: !Sub "${nlbstackname}-smtipNlbTgARN"
+          S3_BUCKET:
             Fn::ImportValue: !Sub "${nlbstackname}-S3NlbBucketName"
           MAX_LOOKUP_PER_INVOCATION:
             Ref: MAXDNSLookupPerInvocation

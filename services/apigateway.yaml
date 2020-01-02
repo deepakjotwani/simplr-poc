@@ -11,6 +11,11 @@ Parameters:
     Default: ''
     Description: VPC ID
 
+  apigatewaystackname:
+    Type: String
+    Default: ''
+    Description: Stack consisting of resources for API Gateway
+
   networkstackname:
     Type: String
     Default: ''
