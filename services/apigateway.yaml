@@ -62,7 +62,7 @@ Resources:
       HttpMethod: ANY
       AuthorizationType: NONE
       Integration:
-        Type: HTTP
+        Type: HTTP_PROXY
         ConnectionType: VPC_LINK
         ConnectionId: !Ref SmtipVpcLink
         IntegrationHttpMethod: ANY
