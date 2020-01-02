@@ -66,7 +66,11 @@ Resources:
         ConnectionType: VPC_LINK
         ConnectionId: !Ref SmtipVpcLink
         IntegrationHttpMethod: ANY
-        Uri: !Sub 'http://Fn::ImportValue: !Sub "${nlbstackname}-smtipNlbARN"'
+        Uri:
+          !Join
+            - ''
+            - - 'http://'
+              - Fn::ImportValue: !Sub "${nlbstackname}-smtipNlbDNS"
     DependsOn: SmtipVpcLink
 
   SmtipApiDeployment:
