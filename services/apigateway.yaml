@@ -1,29 +1,25 @@
 Parameters:
-  type:
-    Type: String
-    Description: Type for Rest API
-
   enviroment:
     Type: String
-    AllowedValues: 
-      - dev 
+    AllowedValues:
+      - dev
       - qa
     Description: ENV for roles(devs or qa)
 
   vpcid:
     Type: String
     Default: ''
-    Description: VPC ID      
+    Description: VPC ID
 
   networkstackname:
     Type: String
-    Default: ''    
-    Description: Network Stack Name 
+    Default: ''
+    Description: Network Stack Name
 
   nlbstackname:
     Type: String
-    Default: ''    
-    Description: NLB Stack Name        
+    Default: ''
+    Description: NLB Stack Name
 
 Resources:
   VpcLink:
@@ -32,26 +28,37 @@ Resources:
           Description:  !Join [ "-", [ 'VPC link for', !Ref enviroment ] ]
           Name: !Join [ "-", [ 'smtip-vpclink', !Ref enviroment ] ]
           TargetArns:
-            Fn::ImportValue:  
-              !Sub "${nlbstackname}-smtipNlbARN" 
-               
-  RestApi:
-    Type: AWS::ApiGateway::RestApi
-    Properties:
-      EndpointConfiguration:
-        Types:
-          - !Ref type
-      Name: !Join [ "-", [ 'smtip-apigateway', !Ref enviroment ] ]
+            Fn::ImportValue:
+              !Sub "${nlbstackname}-smtipNlbARN"
 
-  MockMethod:
+  SmtipRestApi:
+    Type: AWS::ApiGateway::RestApi
+    Properties :
+        Body :
+            swagger : 2.0
+            basePath : /
+            schemes :
+                - http
+        Name : !Join [ "-", [ 'smtip-apigateway', !Ref enviroment ] ]
+        Parameters:
+            endpointConfigurationTypes: REGIONAL
+
+  SmtipMethod:
     Type: 'AWS::ApiGateway::Method'
     Properties:
-      RestApiId: !Ref MyRestApi
-      ResourceId: !GetAtt 
-        - MyRestApi
-        - RootResourceId 
+      RestApiId: !Ref SmtipRestApi
+      ResourceId: !GetAtt
+        - SmtipRestApi
+        - RootResourceId
       HttpMethod: GET
       AuthorizationType: NONE
       Integration:
         Type: VPC_LINK
-    DependsOn: VpcLink        
+    DependsOn: VpcLink
+
+  SmtipApiDeployment:
+      Type: 'AWS::ApiGateway::Deployment'
+      Properties:
+        RestApiId: !Ref SmtipRestApi
+        Description: Smtip Root Resource deployment
+        StageName: dev
