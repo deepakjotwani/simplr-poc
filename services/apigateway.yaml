@@ -52,26 +52,26 @@ Resources:
         Parameters:
             endpointConfigurationTypes: REGIONAL
 
-  SmtipMethod:
-    Type: 'AWS::ApiGateway::Method'
-    Properties:
-      RestApiId: !Ref SmtipRestApi
-      ResourceId: !GetAtt
-        - SmtipRestApi
-        - RootResourceId
-      HttpMethod: ANY
-      AuthorizationType: NONE
-      Integration:
-        Type: HTTP_PROXY
-        ConnectionType: VPC_LINK
-        ConnectionId: !Ref SmtipVpcLink
-        IntegrationHttpMethod: ANY
-        Uri:
-          !Join
-            - ''
-            - - 'http://'
-              - Fn::ImportValue: !Sub "${nlbstackname}-smtipNlbDNS"
-    DependsOn: SmtipVpcLink
+  # SmtipMethod:
+  #   Type: 'AWS::ApiGateway::Method'
+  #   Properties:
+  #     RestApiId: !Ref SmtipRestApi
+  #     ResourceId: !GetAtt
+  #       - SmtipRestApi
+  #       - RootResourceId
+  #     HttpMethod: ANY
+  #     AuthorizationType: NONE
+  #     Integration:
+  #       Type: HTTP_PROXY
+  #       ConnectionType: VPC_LINK
+  #       ConnectionId: !Ref SmtipVpcLink
+  #       IntegrationHttpMethod: ANY
+  #       Uri:
+  #         !Join
+  #           - ''
+  #           - - 'http://'
+  #             - Fn::ImportValue: !Sub "${nlbstackname}-smtipNlbDNS"
+  #   DependsOn: SmtipVpcLink
 
   SmtipApiDeployment:
       Type: 'AWS::ApiGateway::Deployment'
