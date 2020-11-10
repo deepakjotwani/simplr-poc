@@ -1,0 +1,19 @@
+---
+name: Application CI Pipeline on Push
+env:
+  CONTAINER_IMAGE: deepakjotwani/sample1
+on:
+  push:
+    branches: [master]
+jobs:
+  build-publish-docker:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Test jq & awk
+      run: |
+        touch test.json
+        echo "{"access_token":"kjdshfsd", "key2":"value"}" > test.json
+        echo "$json" | jq -r '.access_token'
