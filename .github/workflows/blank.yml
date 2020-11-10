@@ -16,4 +16,4 @@ jobs:
       run: |
         touch test.json
         echo "{"access_token":"kjdshfsd", "key2":"value"}" > test.json
-        echo "$json" | jq -r '.access_token'
+        echo test.json | jq -r '.access_token'
